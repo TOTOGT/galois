@@ -1,0 +1,19 @@
+{
+  "version": "11000",
+  "packagesDir": ".lake/packages",
+  "packages": [
+    {
+      "url": "https://github.com/leanprover-community/mathlib4.git",
+      "type": "git",
+      "subDir": null,
+      "rev": "v4.14.0",
+      "name": "mathlib",
+      "manifestFile": "lake-manifest.json",
+      "inputRev": "v4.14.0",
+      "inherited": false,
+      "configFile": "lakefile.toml"
+    }
+  ],
+  "name": "galois",
+  "lakeDir": ".lake"
+}
