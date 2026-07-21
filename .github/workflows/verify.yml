@@ -14,12 +14,8 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # Generates the missing dependency manifest block dynamically
-    - name: Generate Lake Manifest
-      run: |
-        curl -sSfL https://lean-lang.org | sh -s -- -y --default-toolchain none
-        source $HOME/.elan/env
-        lake update
-
+    # The action natively generates the manifest file itself when flag is true
     - name: Setup Lean 4 and Build Project
       uses: leanprover/lean-action@v1
+      with:
+        lake-update: true
