@@ -3,7 +3,7 @@
   "packagesDir": ".lake/packages",
   "packages": [
     {
-      "name": "mathlib",
+      "name": "mathlib4",
       "type": "git",
       "subDir": "",
       "scope": "leanprover-community",
