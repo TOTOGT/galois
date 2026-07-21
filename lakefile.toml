@@ -6,3 +6,8 @@ defaultTargets = ["Galois"]
 name = "Galois"
 srcDir = "."
 roots = ["group_galois"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.14.0"
