@@ -14,12 +14,5 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # Installs Lean and Lake safely without messy curl pipes
-    - name: Install Lean Toolchain
-      uses: elan-actions/setup-elan@v1
-
-    # Generates a valid lake-manifest.json in the background
-    - name: Configure Manifest and Verify Proof
-      run: |
-        lake update
-        lake build
+    - name: Setup Lean 4 and Build Project
+      uses: leanprover/lean-action@v1
