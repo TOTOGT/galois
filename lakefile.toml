@@ -8,6 +8,6 @@ srcDir = "."
 roots = ["group_galois"]
 
 [[require]]
-name = "mathlib"
+name = "mathlib4"
 scope = "leanprover-community"
 rev = "v4.14.0"
