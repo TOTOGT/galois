@@ -14,14 +14,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Install Elan (Lean Version Manager)
-      run: |
-        curl -sSfL https://lean-lang.org | sh -s -- -y --default-toolchain none
-        echo "$HOME/.elan/bin" >> $GITHUB_PATH
-
-    - name: Build and Verify Proof Kernel
-      run: |
-        # Explicitly source the elan environment profiles for this block execution
-        source $HOME/.elan/env
-        lake env lean --version
-        lake build
+    # Uses the official, community-maintained Lean environment engine
+    - name: Setup Lean 4 and Build Project
+      uses: leanprover/lean-action@v1
