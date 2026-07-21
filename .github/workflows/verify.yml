@@ -14,5 +14,17 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
+    - name: Install Elan & Generate Manifest
+      run: |
+        # Download and install the Lean version manager
+        curl -sSfL https://lean-lang.org | sh -s -- -y --default-toolchain none
+        source $HOME/.elan/env
+        
+        # This fixes the missing manifest error by building it fresh
+        lake update
+
     - name: Setup Lean 4 and Build Project
       uses: leanprover/lean-action@v1
+      with:
+        auto-config: 'false'
+        
