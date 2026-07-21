@@ -14,15 +14,5 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # Uses standard communities workflow layer to fetch toolchains and execute dependency lookups
-    - name: Setup Elan Environment
+    - name: Setup Lean 4 and Build Project
       uses: leanprover/lean-action@v1
-      with:
-        auto-config: 'false'
-        build: 'false'
-
-    # Run the manifest update operation manually inside the populated environment
-    - name: Regenerate Dependency Index
-      run: |
-        lake update
-        lake build
