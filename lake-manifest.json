@@ -12,6 +12,72 @@
       "inputRev": "v4.14.0",
       "inherited": false,
       "configFile": "lakefile.lean"
+    },
+    {
+      "url": "https://github.com/leanprover-community/plausible.git",
+      "type": "git",
+      "subDir": null,
+      "rev": "2b22a01490212a454d48a33b93f0b2f542459996",
+      "name": "plausible",
+      "manifestFile": "lake-manifest.json",
+      "inputRev": "main",
+      "inherited": true,
+      "configFile": "lakefile.toml"
+    },
+    {
+      "url": "https://github.com/leanprover-community/Batteries.git",
+      "type": "git",
+      "subDir": null,
+      "rev": "2a07c1b51e06497f48b948f6831d3f3f01b17b2b",
+      "name": "Batteries",
+      "manifestFile": "lake-manifest.json",
+      "inputRev": "main",
+      "inherited": true,
+      "configFile": "lakefile.toml"
+    },
+    {
+      "url": "https://github.com/leanprover-community/ProofWidgets4.git",
+      "type": "git",
+      "subDir": null,
+      "rev": "7737e54c5017a0a653fd22fbbe139cb801b1a7d6",
+      "name": "ProofWidgets",
+      "manifestFile": "lake-manifest.json",
+      "inputRev": "v0.0.46",
+      "inherited": true,
+      "configFile": "lakefile.lean"
+    },
+    {
+      "url": "https://github.com/leanprover-community/lean4-cli.git",
+      "type": "git",
+      "subDir": null,
+      "rev": "35e3bf32252a1d2e1b19159981a8b946eb2d69e4",
+      "name": "Cli",
+      "manifestFile": "lake-manifest.json",
+      "inputRev": "main",
+      "inherited": true,
+      "configFile": "lakefile.toml"
+    },
+    {
+      "url": "https://github.com/leanprover/lean4-aloeffler.git",
+      "type": "git",
+      "subDir": null,
+      "rev": "d9860b0e5170d13ee63c638102a06144e532ef66",
+      "name": "Aesop",
+      "manifestFile": "lake-manifest.json",
+      "inputRev": "main",
+      "inherited": true,
+      "configFile": "lakefile.toml"
+    },
+    {
+      "url": "https://github.com/leanprover-community/import-graph.git",
+      "type": "git",
+      "subDir": null,
+      "rev": "ed83f3e1b730f805f6345ec473ec0b2b8dd82c89",
+      "name": "importGraph",
+      "manifestFile": "lake-manifest.json",
+      "inputRev": "main",
+      "inherited": true,
+      "configFile": "lakefile.toml"
     }
   ],
   "name": "galois",
