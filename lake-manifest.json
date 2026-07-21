@@ -10,7 +10,8 @@
       "rev": "v4.14.0",
       "url": "https://github.com",
       "inputRev": "v4.14.0",
-      "manifestFile": "lake-manifest.json"
+      "manifestFile": "lake-manifest.json",
+      "inherited": false
     }
   ],
   "models": []
