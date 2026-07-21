@@ -1,7 +1,7 @@
 import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Discriminant
-import Mathlib.Algebra.Polynomial.SplittingField.Construction
+import Mathlib.Algebra.Polynomial.Eval
 import Mathlib.FieldTheory.Galois.Basic
+import Mathlib.FieldTheory.SplittingField.Construction
 import Mathlib.GroupTheory.Perm.Sign
 import Mathlib.Tactic
 
