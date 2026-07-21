@@ -16,10 +16,12 @@ jobs:
 
     - name: Install Elan (Lean Version Manager)
       run: |
-        curl https://githubusercontent.com -sSf | sh -s -- -y
+        curl -sSfL https://lean-lang.org | sh -s -- -y --default-toolchain none
         echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
     - name: Build and Verify Proof Kernel
       run: |
+        # Explicitly source the elan environment profiles for this block execution
+        source $HOME/.elan/env
         lake env lean --version
         lake build
