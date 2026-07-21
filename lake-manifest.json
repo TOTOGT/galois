@@ -6,12 +6,12 @@
       "url": "https://github.com/leanprover-community/mathlib4.git",
       "type": "git",
       "subDir": null,
-      "rev": "v4.14.0",
+      "rev": "4bbdccd9c5f862bf90ff12f0a9e2c8be032b9a84",
       "name": "mathlib",
       "manifestFile": "lake-manifest.json",
       "inputRev": "v4.14.0",
       "inherited": false,
-      "configFile": "lakefile.toml"
+      "configFile": "lakefile.lean"
     }
   ],
   "name": "galois",
