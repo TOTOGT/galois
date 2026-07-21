@@ -47,7 +47,7 @@
       "configFile": "lakefile.lean"
     },
     {
-      "url": "https://github.com/leanprover-community/lean4-cli.git",
+      "url": "https://github.com/leanprover-community/cli.git",
       "type": "git",
       "subDir": null,
       "rev": "35e3bf32252a1d2e1b19159981a8b946eb2d69e4",
@@ -58,7 +58,7 @@
       "configFile": "lakefile.toml"
     },
     {
-      "url": "https://github.com/leanprover/lean4-aloeffler.git",
+      "url": "https://github.com/leanprover-community/aesop.git",
       "type": "git",
       "subDir": null,
       "rev": "d9860b0e5170d13ee63c638102a06144e532ef66",
