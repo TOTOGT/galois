@@ -14,8 +14,8 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # The action natively generates the manifest file itself when flag is true
     - name: Setup Lean 4 and Build Project
       uses: leanprover/lean-action@v1
       with:
-        lake-update: true
+        auto-config: 'true'
+        build: 'true'
