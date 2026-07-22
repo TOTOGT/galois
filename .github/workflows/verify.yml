@@ -1,67 +1,44 @@
-name: Lean 4 Kernel Check
+- name: Checkout Code
+  uses: actions/checkout@v4
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+- name: Cache Elan
+  uses: actions/cache@v4
+  with:
+    path: ~/.elan
+    key: elan-${{ runner.os }}-${{ hashFiles('**/lakefile.lean') }}
+    restore-keys: elan-${{ runner.os }}-
 
-permissions:
-  contents: read
-  checks: write
+- name: Cache Lake build
+  uses: actions/cache@v4
+  with:
+    path: .lake/build
+    key: lake-${{ runner.os }}-${{ hashFiles('**/lakefile.lean', '**/*.lean') }}
+    restore-keys: lake-${{ runner.os }}-
 
-concurrency:
-  group: verify-${{ github.ref }}
-  cancel-in-progress: true
+- name: Generate Lake Manifest
+  run: |
+    lake update
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+- name: Setup Lean 4 and Build Project
+  uses: leanprover/lean-action@v1
+  with:
+    auto-config: true
+    build: true
 
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+- name: Upload build artifacts
+  if: always()
+  uses: actions/upload-artifact@v4
+  with:
+    name: lean-build-logs
+    path: .lake/build/
+    retention-days: 7
 
-    - name: Cache Elan
-      uses: actions/cache@v4
-      with:
-        path: ~/.elan
-        key: elan-${{ runner.os }}-${{ hashFiles('**/lakefile.lean') }}
-        restore-keys: elan-${{ runner.os }}-
-
-    - name: Cache Lake build
-      uses: actions/cache@v4
-      with:
-        path: .lake/build
-        key: lake-${{ runner.os }}-${{ hashFiles('**/lakefile.lean', '**/*.lean') }}
-        restore-keys: lake-${{ runner.os }}-
-
-    - name: Setup Lean 4 and Build Project
-      uses: leanprover/lean-action@v1
-      with:
-        auto-config: true
-        build: true
-
-    # ADD THIS STEP:
-    - name: Generate Lake Manifest
-      run: |
-        lake update
-
-    - name: Upload build artifacts
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: lean-build-logs
-        path: .lake/build/
-        retention-days: 7
-
-    - name: Report results
-      if: always()
-      run: |
-        if [ "${{ job.status }}" = "success" ]; then
-          echo "✅ Lean 4 kernel check passed"
-        else
-          echo "❌ Lean 4 kernel check failed"
-          exit 1
-        fi
+- name: Report results
+  if: always()
+  run: |
+    if [ "${{ job.status }}" = "success" ]; then
+      echo "✅ Lean 4 kernel check passed"
+    else
+      echo "❌ Lean 4 kernel check failed"
+      exit 1
+    fi
