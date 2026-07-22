@@ -7,7 +7,7 @@
       "type": "git",
       "subDir": null,
       "rev": "4bbdccd9c5f862bf90ff12f0a9e2c8be032b9a84",
-      "name": "mathlib",
+      "name": "mathlib4",
       "manifestFile": "lake-manifest.json",
       "inputRev": "v4.14.0",
       "inherited": false,
