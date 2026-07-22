@@ -43,6 +43,11 @@ jobs:
         auto-config: true
         build: true
 
+    # ADD THIS STEP:
+    - name: Generate Lake Manifest
+      run: |
+        lake update
+
     - name: Upload build artifacts
       if: always()
       uses: actions/upload-artifact@v4
