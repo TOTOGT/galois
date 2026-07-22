@@ -14,13 +14,18 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
+    - name: Configure Git
+      run: |
+        git config --global url."https://github.com/".insteadOf git://github.com/
+        git config --global credential.helper store
+        echo "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com" > ~/.git-credentials
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Setup Lean 4 and Build Project
       uses: leanprover/lean-action@v1
       with:
         auto-config: true
         build: true
-        # Add retry configuration if the action supports it
       env:
-        # Ensure git has proper configuration
         GIT_TERMINAL_PROMPT: 0
-        
