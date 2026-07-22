@@ -11,20 +11,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+    - name: Checkout Code
+      uses: actions/checkout@v4
 
-      - name: Setup Lean 4 and Build
-        uses: leanprover/lean-action@v1
-        with:
-          auto-config: true
-          build: true
-          use-mathlib-cache: true
+    - name: Update Lake Dependencies
+      run: lake update
 
-      - name: Upload build artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: lean-build-logs
-          path: .lake/build/
-          retention-days: 7
+    - name: Setup Lean 4 and Build
+      uses: leanprover/lean-action@v1
+      with:
+        auto-config: true
+        build: true
+        use-mathlib-cache: true
+
+    - name: Upload build artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: lean-build-logs
+        path: .lake/build/
+        retention-days: 7
