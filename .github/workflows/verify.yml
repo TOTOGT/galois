@@ -16,3 +16,11 @@ jobs:
 
     - name: Setup Lean 4 and Build Project
       uses: leanprover/lean-action@v1
+      with:
+        auto-config: true
+        build: true
+        # Add retry configuration if the action supports it
+      env:
+        # Ensure git has proper configuration
+        GIT_TERMINAL_PROMPT: 0
+        
