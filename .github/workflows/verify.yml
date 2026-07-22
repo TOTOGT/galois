@@ -42,7 +42,6 @@ jobs:
       with:
         auto-config: true
         build: true
-        lean-version: 'v4.33.0'
 
     - name: Upload build artifacts
       if: always()
