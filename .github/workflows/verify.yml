@@ -14,18 +14,16 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Configure Git
-      run: |
-        git config --global url."https://github.com/".insteadOf git://github.com/
-        git config --global credential.helper store
-        echo "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com" > ~/.git-credentials
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Cache Lean dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.elan
+        key: lean-${{ runner.os }}-${{ hashFiles('**/lakefile.lean') }}
+        restore-keys: lean-${{ runner.os }}-
 
     - name: Setup Lean 4 and Build Project
       uses: leanprover/lean-action@v1
       with:
         auto-config: true
         build: true
-      env:
-        GIT_TERMINAL_PROMPT: 0
+        lean-version: 'stable'
