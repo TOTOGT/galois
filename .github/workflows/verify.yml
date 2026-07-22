@@ -15,15 +15,15 @@
     key: lake-${{ runner.os }}-${{ hashFiles('**/lakefile.lean', '**/*.lean') }}
     restore-keys: lake-${{ runner.os }}-
 
-- name: Generate Lake Manifest
-  run: |
-    lake update
-
 - name: Setup Lean 4 and Build Project
   uses: leanprover/lean-action@v1
   with:
     auto-config: true
     build: true
+
+- name: Generate Lake Manifest
+  run: |
+    lake update
 
 - name: Upload build artifacts
   if: always()
