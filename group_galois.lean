@@ -21,11 +21,11 @@ noncomputable def nBonacciPolynomial (n : ℕ) : ℤ[X] :=
 noncomputable def nBonacciPolynomialQ (n : ℕ) : ℚ[X] :=
   (nBonacciPolynomial n).map (Int.castRingHom ℚ)
 
-/-- The Splitting Field defined natively as the SplittingField of the polynomial over ℚ. -/
+/-- Transparent definition for SplittingField. -/
 noncomputable abbrev NBonacciSplittingField (n : ℕ) : Type _ :=
   (nBonacciPolynomialQ n).SplittingField
 
-/-- Galois Group defined via Mathlib's native `Polynomial.Gal`. -/
+/-- Galois Group defined directly via Mathlib's native `Polynomial.Gal`. -/
 abbrev nBonacciGaloisGroup (n : ℕ) : Type _ :=
   (nBonacciPolynomialQ n).Gal
 
@@ -35,7 +35,7 @@ abbrev nBonacciGaloisGroup (n : ℕ) : Type _ :=
 
 /-- In characteristic 0, the splitting field of any polynomial is automatically Galois. -/
 instance nBonacci_isGalois (n : ℕ) : IsGalois ℚ (NBonacciSplittingField n) :=
-  inferInstance
+  Polynomial.SplittingField.isGalois (nBonacciPolynomialQ n)
 
 -- ============================================================================
 -- Phase 3: The action map
