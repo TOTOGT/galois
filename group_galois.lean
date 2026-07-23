@@ -25,12 +25,12 @@ noncomputable def nBonacciPolynomialQ (n : ℕ) : ℚ[X] :=
 noncomputable abbrev NBonacciSplittingField (n : ℕ) : Type _ :=
   (nBonacciPolynomialQ n).SplittingField
 
--- Explicit instance shims to ensure instances resolve immediately
-instance (n : ℕ) : Field (NBonacciSplittingField n) := by
+-- Explicit noncomputable instance shims
+noncomputable instance (n : ℕ) : Field (NBonacciSplittingField n) := by
   dsimp [NBonacciSplittingField]
   infer_instance
 
-instance (n : ℕ) : CommRing (NBonacciSplittingField n) := by
+noncomputable instance (n : ℕ) : CommRing (NBonacciSplittingField n) := by
   dsimp [NBonacciSplittingField]
   infer_instance
 
@@ -52,11 +52,11 @@ instance nBonacci_isGalois (n : ℕ) : IsGalois ℚ (NBonacciSplittingField n) :
 
 noncomputable def nBonacciActionHom (n : ℕ) :
     nBonacciGaloisGroup n →* Equiv.Perm ((nBonacciPolynomialQ n).rootSet (NBonacciSplittingField n)) :=
-  Polynomial.Gal.galActionHom (nBonacciPolynomialQ n)
+  Polynomial.Gal.galActionHom (nBonacciPolynomialQ n) (NBonacciSplittingField n)
 
-theorem nBonacci_action_injective (n : ℕ) (_hsep : (nBonacciPolynomialQ n).Separable) :
+theorem nBonacci_action_injective (n : ℕ) (hsep : (nBonacciPolynomialQ n).Separable) :
     Function.Injective (nBonacciActionHom n) :=
-  Polynomial.Gal.galActionHom_injective (nBonacciPolynomialQ n) _hsep
+  Polynomial.Gal.galActionHom_injective (nBonacciPolynomialQ n) (NBonacciSplittingField n) hsep
 
 -- ============================================================================
 -- Phase 4: Surjectivity and the main theorem
