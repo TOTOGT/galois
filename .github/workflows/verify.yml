@@ -1,19 +1,24 @@
-    - name: Checkout Code
+- name: Checkout Code
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        persist-credentials: true
+        persist-credentials: false
         submodules: recursive
+
+    - name: Install Elan / Lean 4 Toolchain
+      run: |
+        curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
+        echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
     - name: Show git & network info (debug)
       run: |
         git --version
-        git config --list
-        # Try cloning one dependency to capture the underlying git error if it fails
-        GIT_TRACE=1 GIT_CURL_VERBOSE=1 git clone https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4-clone || true
-        ls -la /tmp || true
+        git config --list --show-origin
+        # Verify network/git access to external dependency
+        GIT_TRACE=1 GIT_CURL_VERBOSE=1 git clone --depth 1 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4-clone || true
+        rm -rf /tmp/mathlib4-clone
 
-    - name: Update Lake Dependencies (with retries)
+    - name: Update Lake Dependencies (with retries & clean reset)
       run: |
         set -e
         attempts=0
@@ -22,10 +27,14 @@
         do
           attempts=$((attempts+1))
           echo "Attempt $attempts of $max_attempts: running lake update..."
-          # Enable verbose git tracing for better logs if it fails
+          
+          # Enable verbose tracing for diagnostic logs
           GIT_TRACE=1 GIT_CURL_VERBOSE=1 lake update && break || {
             echo "lake update failed (attempt $attempts)"
             if [ $attempts -lt $max_attempts ]; then
+              echo "Cleaning up build lock files and partial package downloads before retrying..."
+              rm -rf .lake/packages
+              rm -f .git/*.lock .git/modules/*/*.lock
               sleep $((attempts * 5))
               continue
             else
