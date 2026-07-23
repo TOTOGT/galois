@@ -34,6 +34,10 @@ noncomputable instance (n : ℕ) : CommRing (NBonacciSplittingField n) := by
   dsimp [NBonacciSplittingField]
   infer_instance
 
+/-- Ensure Lean synthesizes the splitting property for the polynomial over its splitting field. -/
+instance (n : ℕ) : Fact (map (algebraMap ℚ (NBonacciSplittingField n)) (nBonacciPolynomialQ n)).Splits :=
+  ⟨Polynomial.SplittingField.splits (nBonacciPolynomialQ n)⟩
+
 /-- Galois Group using Mathlib's native Gal(L/K) notation. -/
 abbrev nBonacciGaloisGroup (n : ℕ) : Type _ :=
   Gal(NBonacciSplittingField n / ℚ)
@@ -52,11 +56,11 @@ instance nBonacci_isGalois (n : ℕ) : IsGalois ℚ (NBonacciSplittingField n) :
 
 noncomputable def nBonacciActionHom (n : ℕ) :
     nBonacciGaloisGroup n →* Equiv.Perm ((nBonacciPolynomialQ n).rootSet (NBonacciSplittingField n)) :=
-  Polynomial.Gal.galActionHom (nBonacciPolynomialQ n) (NBonacciSplittingField n)
+  Polynomial.Gal.galActionHom (nBonacciPolynomialQ n)
 
 theorem nBonacci_action_injective (n : ℕ) (hsep : (nBonacciPolynomialQ n).Separable) :
     Function.Injective (nBonacciActionHom n) :=
-  Polynomial.Gal.galActionHom_injective (nBonacciPolynomialQ n) (NBonacciSplittingField n) hsep
+  Polynomial.Gal.galActionHom_injective (nBonacciPolynomialQ n) hsep
 
 -- ============================================================================
 -- Phase 4: Surjectivity and the main theorem
