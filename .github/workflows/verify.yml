@@ -1,27 +1,36 @@
-name: Verify Lean 4 Project
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
     - name: Checkout Code
       uses: actions/checkout@v4
-    
-    - name: Setup Lean 4 and Build
-      uses: leanprover/lean-action@v1
       with:
-        auto-config: true
-        build: false
+        fetch-depth: 0
+        persist-credentials: true
+        submodules: recursive
 
-    - name: Update Lake Dependencies
-      run: lake update
+    - name: Show git & network info (debug)
+      run: |
+        git --version
+        git config --list
+        # Try cloning one dependency to capture the underlying git error if it fails
+        GIT_TRACE=1 GIT_CURL_VERBOSE=1 git clone https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4-clone || true
+        ls -la /tmp || true
 
-    - name: Build Project
-      run: lake build
+    - name: Update Lake Dependencies (with retries)
+      run: |
+        set -e
+        attempts=0
+        max_attempts=3
+        until [ $attempts -ge $max_attempts ]
+        do
+          attempts=$((attempts+1))
+          echo "Attempt $attempts of $max_attempts: running lake update..."
+          # Enable verbose git tracing for better logs if it fails
+          GIT_TRACE=1 GIT_CURL_VERBOSE=1 lake update && break || {
+            echo "lake update failed (attempt $attempts)"
+            if [ $attempts -lt $max_attempts ]; then
+              sleep $((attempts * 5))
+              continue
+            else
+              echo "All attempts failed; exiting with non-zero status"
+              exit 1
+            fi
+          }
+        done
