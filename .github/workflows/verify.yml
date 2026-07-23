@@ -52,7 +52,12 @@ jobs:
                 continue
               else
                 echo "All attempts failed; exiting with non-zero status"
-                      - name: Build Lean Project
+                exit 1
+              fi
+            }
+          done
+
+      - name: Build Lean Project
         run: |
           lake build
 
@@ -62,8 +67,3 @@ jobs:
             echo "ERROR: Theorem_Galois contains sorry"
             exit 1
           fi
-                exit 1
-              fi
-            }
-          done
-          
