@@ -52,6 +52,16 @@ jobs:
                 continue
               else
                 echo "All attempts failed; exiting with non-zero status"
+                      - name: Build Lean Project
+        run: |
+          lake build
+
+      - name: Check for sorries (optional but recommended)
+        run: |
+          if lake env lean -e '#print axioms Theorem_Galois' 2>&1 | grep -q "sorry"; then
+            echo "ERROR: Theorem_Galois contains sorry"
+            exit 1
+          fi
                 exit 1
               fi
             }
