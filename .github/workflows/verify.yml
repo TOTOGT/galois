@@ -1,37 +1,4 @@
-name: Verify Lean 4 Setup
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-          submodules: recursive
-
-      - name: Install Elan / Lean 4 Toolchain
-        run: |
-          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
-          echo "$HOME/.elan/bin" >> $GITHUB_PATH
-
-      - name: Show git & network info (debug)
-        run: |
-          git --version
-          git config --list --show-origin
-          # Verify network/git access to external dependency
-          GIT_TRACE=1 GIT_CURL_VERBOSE=1 git clone --depth 1 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4-clone || true
-          rm -rf /tmp/mathlib4-clone
-
-      - name: Update Lake Dependencies (with retries & clean reset)
+- name: Update Lake Dependencies (with retries & clean reset)
         run: |
           set -e
           attempts=0
@@ -40,12 +7,10 @@ jobs:
           do
             attempts=$((attempts+1))
             echo "Attempt $attempts of $max_attempts: running lake update..."
-            
-            # Enable verbose tracing for diagnostic logs
             GIT_TRACE=1 GIT_CURL_VERBOSE=1 lake update && break || {
               echo "lake update failed (attempt $attempts)"
               if [ $attempts -lt $max_attempts ]; then
-                echo "Cleaning up build lock files and partial package downloads before retrying..."
+                echo "Cleaning up build lock files..."
                 rm -rf .lake/packages
                 rm -f .git/*.lock .git/modules/*/*.lock
                 sleep $((attempts * 5))
@@ -61,7 +26,7 @@ jobs:
         run: |
           lake build
 
-      - name: Check for sorries (optional but recommended)
+      - name: Check for sorries
         run: |
           if lake env lean -e '#print axioms Theorem_Galois' 2>&1 | grep -q "sorry"; then
             echo "ERROR: Theorem_Galois contains sorry"
