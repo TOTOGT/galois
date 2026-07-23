@@ -1,4 +1,36 @@
-- name: Update Lake Dependencies (with retries & clean reset)
+name: Verify Lean 4 Setup
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          submodules: recursive
+
+      - name: Install Elan / Lean 4 Toolchain
+        run: |
+          curl [https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh](https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh) -sSf | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+
+      - name: Show git & network info (debug)
+        run: |
+          git --version
+          git config --list --show-origin
+          GIT_TRACE=1 GIT_CURL_VERBOSE=1 git clone --depth 1 [https://github.com/leanprover-community/mathlib4.git](https://github.com/leanprover-community/mathlib4.git) /tmp/mathlib4-clone || true
+          rm -rf /tmp/mathlib4-clone
+
+      - name: Update Lake Dependencies (with retries & clean reset)
         run: |
           set -e
           attempts=0
