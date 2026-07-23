@@ -21,9 +21,18 @@ noncomputable def nBonacciPolynomial (n : ℕ) : ℤ[X] :=
 noncomputable def nBonacciPolynomialQ (n : ℕ) : ℚ[X] :=
   (nBonacciPolynomial n).map (Int.castRingHom ℚ)
 
-/-- The Splitting Field defined natively over ℚ[X]. -/
-noncomputable def NBonacciSplittingField (n : ℕ) :=
+/-- Transparent definition for SplittingField so Lean's typeclass resolution can see the instances. -/
+noncomputable abbrev NBonacciSplittingField (n : ℕ) : Type _ :=
   (nBonacciPolynomialQ n).SplittingField
+
+-- Explicit instance shims to ensure instances resolve immediately
+instance (n : ℕ) : Field (NBonacciSplittingField n) := by
+  dsimp [NBonacciSplittingField]
+  infer_instance
+
+instance (n : ℕ) : CommRing (NBonacciSplittingField n) := by
+  dsimp [NBonacciSplittingField]
+  infer_instance
 
 /-- Galois Group using Mathlib's native Gal(L/K) notation. -/
 abbrev nBonacciGaloisGroup (n : ℕ) : Type _ :=
@@ -45,9 +54,9 @@ noncomputable def nBonacciActionHom (n : ℕ) :
     nBonacciGaloisGroup n →* Equiv.Perm ((nBonacciPolynomialQ n).rootSet (NBonacciSplittingField n)) :=
   Polynomial.Gal.galActionHom (nBonacciPolynomialQ n)
 
-theorem nBonacci_action_injective (n : ℕ) (hsep : (nBonacciPolynomialQ n).Separable) :
+theorem nBonacci_action_injective (n : ℕ) (_hsep : (nBonacciPolynomialQ n).Separable) :
     Function.Injective (nBonacciActionHom n) :=
-  Polynomial.Gal.galActionHom_injective (nBonacciPolynomialQ n) hsep
+  Polynomial.Gal.galActionHom_injective (nBonacciPolynomialQ n) _hsep
 
 -- ============================================================================
 -- Phase 4: Surjectivity and the main theorem
