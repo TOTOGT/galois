@@ -1,45 +1,59 @@
-- name: Checkout Code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        persist-credentials: false
-        submodules: recursive
+name: Verify Lean 4 Setup
 
-    - name: Install Elan / Lean 4 Toolchain
-      run: |
-        curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
-        echo "$HOME/.elan/bin" >> $GITHUB_PATH
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
-    - name: Show git & network info (debug)
-      run: |
-        git --version
-        git config --list --show-origin
-        # Verify network/git access to external dependency
-        GIT_TRACE=1 GIT_CURL_VERBOSE=1 git clone --depth 1 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4-clone || true
-        rm -rf /tmp/mathlib4-clone
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-    - name: Update Lake Dependencies (with retries & clean reset)
-      run: |
-        set -e
-        attempts=0
-        max_attempts=3
-        until [ $attempts -ge $max_attempts ]
-        do
-          attempts=$((attempts+1))
-          echo "Attempt $attempts of $max_attempts: running lake update..."
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          submodules: recursive
+
+      - name: Install Elan / Lean 4 Toolchain
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+
+      - name: Show git & network info (debug)
+        run: |
+          git --version
+          git config --list --show-origin
+          # Verify network/git access to external dependency
+          GIT_TRACE=1 GIT_CURL_VERBOSE=1 git clone --depth 1 https://github.com/leanprover-community/mathlib4.git /tmp/mathlib4-clone || true
+          rm -rf /tmp/mathlib4-clone
+
+      - name: Update Lake Dependencies (with retries & clean reset)
+        run: |
+          set -e
+          attempts=0
+          max_attempts=3
+          until [ $attempts -ge $max_attempts ]
+          do
+            attempts=$((attempts+1))
+            echo "Attempt $attempts of $max_attempts: running lake update..."
+            
+            # Enable verbose tracing for diagnostic logs
+            GIT_TRACE=1 GIT_CURL_VERBOSE=1 lake update && break || {
+              echo "lake update failed (attempt $attempts)"
+              if [ $attempts -lt $max_attempts ]; then
+                echo "Cleaning up build lock files and partial package downloads before retrying..."
+                rm -rf .lake/packages
+                rm -f .git/*.lock .git/modules/*/*.lock
+                sleep $((attempts * 5))
+                continue
+              else
+                echo "All attempts failed; exiting with non-zero status"
+                exit 1
+              fi
+            }
+          done
           
-          # Enable verbose tracing for diagnostic logs
-          GIT_TRACE=1 GIT_CURL_VERBOSE=1 lake update && break || {
-            echo "lake update failed (attempt $attempts)"
-            if [ $attempts -lt $max_attempts ]; then
-              echo "Cleaning up build lock files and partial package downloads before retrying..."
-              rm -rf .lake/packages
-              rm -f .git/*.lock .git/modules/*/*.lock
-              sleep $((attempts * 5))
-              continue
-            else
-              echo "All attempts failed; exiting with non-zero status"
-              exit 1
-            fi
-          }
-        done
