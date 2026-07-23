@@ -1,5 +1,5 @@
 import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Eval
+import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.SplittingField.Construction
 import Mathlib.FieldTheory.PolynomialGaloisGroup
