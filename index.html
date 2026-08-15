@@ -3,53 +3,107 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>galois · n-bonacci Galois groups · IGP24 entry · Principia Orthogona</title>
 <meta name="description" content="Galois groups of the n-bonacci polynomials in Lean 4, and an IGP24 entry built from composita of small-degree number fields. Open steps are marked, not hidden.">
+<meta name="author" content="Pablo Nogueira Grossi">
+<meta name="color-scheme" content="dark">
 <style>
-:root{--navy:#1a2744;--navy-2:#111a30;--gold:#c9a84c;--gold-dim:#8a6f2e;--cream:#faf7f0;
-      --mid:#3a4f7a;--rule:rgba(201,168,76,.28);--muted:#a99f8c;--open:#d2a24c;--ok:#7a9471;}
+:root{
+  --navy:#1a2744; --navy-2:#111a30; --gold:#c9a84c; --cream:#faf7f0;
+  --rule:rgba(201,168,76,.28); --rule-soft:rgba(201,168,76,.12);
+  --wash:rgba(201,168,76,.045); --muted:#a99f8c;
+  --open:#d2a24c; --ok:#7a9471; --warn:#c07a6a;
+  --mono:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  --serif:Georgia,'Iowan Old Style',serif;
+}
 *{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--navy);color:var(--cream);
-     font-family:Georgia,'Iowan Old Style',serif;line-height:1.65;}
-.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace}
-header{padding:3rem 1.5rem 2rem;border-bottom:1px solid var(--rule);
-       background:linear-gradient(180deg,var(--navy-2),var(--navy));}
+     font-family:var(--serif);line-height:1.65;}
 .wrap{max-width:860px;margin:0 auto;}
-.eyebrow{font-family:ui-monospace,monospace;font-size:.7rem;letter-spacing:.2em;
+.mono{font-family:var(--mono)}
+
+/* ---------- masthead ---------- */
+header{padding:3rem 1.5rem 2.25rem;border-bottom:1px solid var(--rule);
+       background:linear-gradient(180deg,var(--navy-2),var(--navy));}
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;
          text-transform:uppercase;color:var(--gold);margin:0 0 .7rem;}
-h1{font-size:clamp(1.9rem,4.4vw,2.7rem);margin:0 0 .4rem;font-weight:400;letter-spacing:-.01em;}
-.sub{color:var(--muted);font-size:1rem;max-width:60ch;margin:0;}
+h1{font-size:clamp(1.9rem,4.4vw,2.7rem);margin:0 0 .5rem;
+   font-weight:400;letter-spacing:-.01em;line-height:1.1;}
+.sub{color:var(--muted);font-size:1rem;max-width:62ch;margin:0;}
+
+/* ---------- stat strip ---------- */
+.stats{display:flex;gap:1.25rem 2.4rem;flex-wrap:wrap;margin-top:1.75rem;}
+.stat{display:flex;flex-direction:column;gap:.3rem;min-width:6.5rem;}
+.stat b{font-size:1.7rem;font-weight:400;line-height:1;font-variant-numeric:tabular-nums;}
+.stat span{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;
+           line-height:1.4;text-transform:uppercase;color:var(--muted);}
+.stat.is-open b{color:var(--open);}
+
+/* ---------- body ---------- */
 main{padding:0 1.5rem 4rem;}
 h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);
-   font-family:ui-monospace,monospace;font-weight:400;border-bottom:1px solid var(--rule);
-   padding-bottom:.5rem;margin:2.8rem 0 1.1rem;}
+   font-family:var(--mono);font-weight:400;border-bottom:1px solid var(--rule);
+   padding-bottom:.5rem;margin:2.8rem 0 1.1rem;scroll-margin-top:1rem;}
 p{margin:0 0 1rem;}
-code{font-family:ui-monospace,monospace;font-size:.88em;background:rgba(201,168,76,.09);
+a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3);}
+a:hover,a:focus{border-bottom-color:var(--gold);}
+a:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+code{font-family:var(--mono);font-size:.88em;background:rgba(201,168,76,.09);
      padding:.1em .35em;border-radius:3px;}
-pre{background:var(--navy-2);border:1px solid var(--rule);border-radius:6px;padding:1rem 1.1rem;
-    overflow-x:auto;font-family:ui-monospace,monospace;font-size:.8rem;line-height:1.55;}
-table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.9rem;}
-th{text-align:left;font-family:ui-monospace,monospace;font-size:.68rem;letter-spacing:.12em;
+pre{background:var(--navy-2);border:1px solid var(--rule);border-radius:6px;
+    padding:1rem 1.1rem;overflow-x:auto;font-family:var(--mono);
+    font-size:.8rem;line-height:1.55;}
+pre code{background:none;padding:0;}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto;margin:1.2rem 0;}
+table{width:100%;border-collapse:collapse;font-size:.9rem;}
+th{text-align:left;font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;
    text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--rule);
-   padding:.5rem .6rem;font-weight:400;}
-td{padding:.5rem .6rem;border-bottom:1px solid rgba(201,168,76,.12);vertical-align:top;}
-.tag{font-family:ui-monospace,monospace;font-size:.66rem;letter-spacing:.08em;
-     padding:.15rem .45rem;border-radius:2px;white-space:nowrap;}
+   padding:.5rem .6rem;font-weight:400;white-space:nowrap;}
+td{padding:.5rem .6rem;border-bottom:1px solid var(--rule-soft);vertical-align:top;}
+
+/* ---------- status tags ---------- */
+.tag{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;
+     padding:.15rem .45rem;border-radius:2px;white-space:nowrap;
+     display:inline-block;}
 .t-ok{background:rgba(122,148,113,.16);color:var(--ok);border:1px solid rgba(122,148,113,.4);}
 .t-open{background:rgba(210,162,76,.13);color:var(--open);border:1px solid rgba(210,162,76,.4);}
 .t-ass{background:rgba(140,140,160,.12);color:#a9a9bd;border:1px solid rgba(160,160,190,.3);}
-.box{border:1px solid var(--rule);border-radius:8px;padding:1.2rem 1.4rem;margin:1.6rem 0;
-     background:rgba(201,168,76,.045);}
-.box .label{font-family:ui-monospace,monospace;font-size:.66rem;letter-spacing:.18em;
-     text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
-a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3);}
-a:hover{border-bottom-color:var(--gold);}
-.stats{display:flex;gap:2.2rem;flex-wrap:wrap;margin-top:1.5rem;}
-.stat b{display:block;font-size:1.7rem;font-weight:400;}
-.stat span{display:block;font-family:ui-monospace,monospace;font-size:.66rem;
-     letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.t-bad{background:rgba(192,122,106,.13);color:var(--warn);border:1px solid rgba(192,122,106,.4);}
+
+/* ---------- callout boxes ---------- */
+.box{border:1px solid var(--rule);border-radius:8px;padding:1.2rem 1.4rem;
+     margin:1.6rem 0;background:var(--wash);}
+.box > :last-child{margin-bottom:0;}
+.label{font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;
+       text-transform:uppercase;color:var(--gold);margin-bottom:.55rem;}
+.fineprint{color:var(--muted);font-size:.85rem;}
+
+/* ---------- reference + source lists ---------- */
 .refs{list-style:none;padding:0;margin:1.1rem 0;font-size:.88rem;}
-.refs li{padding:.55rem 0;border-bottom:1px solid rgba(201,168,76,.12);}
+.refs li{padding:.6rem 0;border-bottom:1px solid var(--rule-soft);}
 .refs li:last-child{border-bottom:none;}
-footer{border-top:1px solid var(--rule);padding:2rem 1.5rem 3rem;color:var(--muted);font-size:.8rem;}
+.refs .tier{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;
+            text-transform:uppercase;color:var(--gold);
+            border:1px solid var(--rule);border-radius:2px;
+            padding:.1rem .35rem;margin-right:.5rem;white-space:nowrap;}
+.refs .tier.bad{color:var(--warn);border-color:rgba(192,122,106,.4);}
+.legend{font-family:var(--mono);font-size:.7rem;color:var(--muted);
+        line-height:1.9;margin:0 0 1rem;}
+
+/* ---------- cards ---------- */
+.cards{display:flex;gap:1.2rem;flex-wrap:wrap;align-items:stretch;margin:1.2rem 0;}
+.card{flex:1 1 260px;border:1px solid var(--rule);border-radius:8px;
+      padding:1rem 1.2rem;background:var(--wash);}
+a.card{display:block;color:var(--cream);text-decoration:none;
+       border-bottom:1px solid var(--rule);}
+a.card:hover{border-color:var(--gold);}
+.card-title{font-size:1.05rem;}
+.card-meta{color:var(--muted);font-size:.83rem;margin-top:.2rem;}
+.card-list{font-size:.88rem;line-height:1.9;}
+
+footer{border-top:1px solid var(--rule);padding:2rem 1.5rem 3rem;
+       color:var(--muted);font-size:.8rem;}
 </style>
 </head><body>
 
@@ -60,7 +114,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 1.5rem 3rem;color:var(--mut
   IGP24 built from composita of small-degree number fields. Open steps are marked, not hidden.</p>
   <div class="stats">
     <div class="stat"><b>1</b><span>lemma closed</span></div>
-    <div class="stat"><b style="color:var(--open)">1</b><span>sorry, obstruction named</span></div>
+    <div class="stat is-open"><b>1</b><span>sorry, obstruction named</span></div>
     <div class="stat"><b>588</b><span>IGP24 polynomials</span></div>
     <div class="stat"><b>587</b><span>distinct fields</span></div>
     <div class="stat"><b>195</b><span>distinct spectra</span></div>
@@ -69,7 +123,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 1.5rem 3rem;color:var(--mut
 
 <main><div class="wrap">
 
-<h2>The object</h2>
+<h2 id="object">The object</h2>
 <p>For <code>n &ge; 2</code> the n-bonacci polynomial is
 <code>p_n(X) = X^n &minus; (X^(n-1) + &hellip; + X + 1)</code>. Its dominant real root is the
 n-bonacci constant: the golden ratio at <code>n=2</code>, the tribonacci constant
@@ -78,11 +132,13 @@ is the algebraic spine of the series.</p>
 <p>Multiplying by <code>(X&minus;1)</code> gives a trinomial,
 <code>X^(n+1) &minus; 2X^n + 1</code>. That is what puts the trinomial literature in range &mdash;
 but the trinomial so obtained is <b>reducible by construction</b>, which is a hypothesis failure
-rather than a detail. See the obstruction.</p>
+and not a detail. See <a href="#obstruction">the obstruction</a>.</p>
 
-<h2>Lean status</h2>
+<h2 id="lean">Lean status</h2>
+<div class="tablewrap">
 <table>
-<tr><th>Result</th><th>Status</th><th>Evidence</th></tr>
+<thead><tr><th>Result</th><th>Status</th><th>Evidence</th></tr></thead>
+<tbody>
 <tr><td class="mono">nBonacci_action_injective</td><td><span class="tag t-ok">VERIFIED</span></td>
     <td>Mathlib <code>galActionHom_injective</code>, applied directly. No <code>sorry</code>.</td></tr>
 <tr><td class="mono">nBonacci_action_bijective</td><td><span class="tag t-open">OPEN</span></td>
@@ -91,9 +147,11 @@ rather than a detail. See the obstruction.</p>
     <td>Compiles, but derives from the line above and inherits its <code>sorry</code>.</td></tr>
 <tr><td>Irreducibility of <code>p_n</code></td><td><span class="tag t-ass">ASSUMED</span></td>
     <td>Carried as hypothesis <code>hirr</code>, not discharged here.</td></tr>
+</tbody>
 </table>
+</div>
 
-<div class="box">
+<div class="box" id="obstruction">
   <div class="label">The obstruction</div>
   <p>For <b>prime</b> degree <code>p</code>, a transitive subgroup of <code>S_p</code> containing a
   transposition is all of <code>S_p</code>, and surjectivity closes at once. <b>Odd composite
@@ -111,32 +169,33 @@ rather than a detail. See the obstruction.</p>
   therefore do not apply as stated, and the transfer from the trinomial to <code>p_n</code> is
   itself <span class="tag t-open">OPEN</span> &mdash; a reduction argument to be written, not a
   lookup. Citing the literature does not discharge it.</p>
-  <p style="margin:0;color:var(--muted);font-size:.85rem;">Bibliographic details of the three
-  papers are verified against the publishers of record and listed under
-  <a href="#references">References</a>. No theorem number inside any of them is cited here: the
-  PDFs have not been read against this repository, and a numbered result quoted from memory is a
-  claim, not a citation.</p>
+  <p class="fineprint">No theorem number inside any of those papers is cited on this page. The
+  PDFs have not been read against this repository, and a numbered result quoted from working
+  knowledge is a claim rather than a citation. Bibliographic fields are recorded under
+  <a href="#sources">Sources</a> with how each was checked.</p>
 </div>
 
-<h2>IGP24 entry</h2>
+<h2 id="igp24">IGP24 entry</h2>
 <p><a href="https://competition.sair.foundation/competitions/igp24/overview">IGP24</a> asks for
 explicit degree-24 integer polynomials realizing as many of the 25,000 transitive groups
 <code>24T1</code>&ndash;<code>24T25000</code>, and their signatures, as possible. The frozen
 LMFDB-derived baseline covers 286 labels and 622 of the 165,836 possible
 <code>(24Tt, r)</code> pairs, so most of the map is blank.</p>
 
-<p><b>Method.</b> <code>24 = 2&middot;12 = 3&middot;8 = 4&middot;6 = 2&middot;2&middot;6 = 2&middot;3&middot;4</code>. A compositum of
-linearly-disjoint subfields is <b>imprimitive by construction</b> &mdash; the field contains a
-proper subfield &mdash; which is where most of the 25,000 groups live and where random sparse
-search does not go. Random polynomials land in <code>S24</code> or <code>A24</code>, which the
-baseline certainly holds.</p>
+<p><b>Method.</b> <code>24 = 2&middot;12 = 3&middot;8 = 4&middot;6 = 2&middot;2&middot;6 =
+2&middot;3&middot;4</code>. A compositum of linearly-disjoint subfields is <b>imprimitive by
+construction</b> &mdash; the field contains a proper subfield &mdash; which is where most of the
+25,000 groups live and where random sparse search does not go. Random polynomials land in
+<code>S24</code> or <code>A24</code>, which the baseline certainly holds.</p>
 
-<pre>min poly of &alpha; + c&beta;  =  Res_y( f(y), g(x &minus; cy) )     deg f = a, deg g = b, ab = 24</pre>
+<pre><code>min poly of &alpha; + c&beta;  =  Res_y( f(y), g(x &minus; cy) )     deg f = a, deg g = b, ab = 24</code></pre>
 
 <p><b>Deduplication.</b> Varying <code>c</code> generates the <em>same</em> field, so those are not
 distinct submissions. Candidates were fingerprinted by factorization pattern mod the first 25
 primes &mdash; a strong field invariant &mdash; and only the smallest <code>|poldisc|</code>
-generator per field was kept. 754 constructions collapsed to <b>587 distinct fields</b>. Triple composita (2&middot;2&middot;6, 2&middot;3&middot;4) carry nested block systems and reach groups the pair constructions cannot.</p>
+generator per field was kept. 754 constructions collapsed to <b>587 distinct fields</b>. Triple
+composita (2&middot;2&middot;6, 2&middot;3&middot;4) carry nested block systems and reach groups
+the pair constructions cannot.</p>
 
 <p><b>The modulo ladder.</b> By Chebotarev, the factorization degree pattern of <code>f</code>
 mod&nbsp;<code>p</code> is the cycle type of a Frobenius element, so climbing primes reads the
@@ -144,14 +203,18 @@ group's cycle types off without a computer algebra licence. Candidates with few,
 cycle types have small imprimitive groups; those throwing 22- and 23-cycles are
 <code>S24</code>/<code>A24</code>.</p>
 
+<div class="tablewrap">
 <table>
-<tr><th>Construction</th><th>cycle types</th><th>max cycle</th><th>log&#8321;&#8320;|poldisc|</th></tr>
+<thead><tr><th>Construction</th><th>cycle types</th><th>max cycle</th><th>log&#8321;&#8320;|poldisc|</th></tr></thead>
+<tbody>
 <tr><td class="mono">x&#8308;+1 &times; x&#8310;+x&sup3;+1</td><td>3</td><td>6</td><td>119</td></tr>
 <tr><td class="mono">x&#8308;+1 &times; x&#8310;&minus;x&sup3;&minus;1</td><td>3</td><td>6</td><td>122</td></tr>
 <tr><td class="mono">x&sup3;&minus;x&minus;1 &times; x&#8312;+1</td><td>5</td><td>12</td><td>124</td></tr>
 <tr><td class="mono">x&#8308;&minus;x&sup2;&minus;1 &times; x&#8310;+x&sup3;+1</td><td>5</td><td>12</td><td>124</td></tr>
 <tr><td class="mono">&hellip; 66 more profiled</td><td>6&ndash;26</td><td>12&ndash;22</td><td>99&ndash;328</td></tr>
+</tbody>
 </table>
+</div>
 
 <div class="box">
   <div class="label">What is not claimed</div>
@@ -163,7 +226,6 @@ cycle types have small imprimitive groups; those throwing 22- and 23-cycles are
   zero. <b>Nothing here should be described as a discovery until the verifier says so.</b></p>
 </div>
 
-
 <div class="box">
   <div class="label">Expected yield, stated honestly</div>
   <p>588 polynomials is not 588 results. Each team is credited <b>once</b> per
@@ -172,63 +234,74 @@ cycle types have small imprimitive groups; those throwing 22- and 23-cycles are
   <b>195 distinct cycle-type spectra</b> &mdash; different spectra force different Galois groups,
   so that is a lower bound on distinct groups. 113 are singletons. The largest cluster has 49
   polynomials sharing one spectrum: the construction saturating.</p>
-  <p style="margin:0;">That is why the 200,000-polynomials-per-day ceiling is not the lever.
-  More pairs come from new structural families, not more lines.</p>
+  <p>That is why the 200,000-polynomials-per-day ceiling is not the lever. More pairs come from
+  new structural families, not more lines.</p>
 </div>
 
-<h2>Reproducing</h2>
-<pre>python3 gen_igp24_v2.py     # 754 constructions -> 587 distinct fields
+<h2 id="reproducing">Reproducing</h2>
+<pre><code>python3 gen_igp24_v2.py     # 754 constructions -> 587 distinct fields
 lake exe cache get &amp;&amp; lake build
-#print axioms Theorem_Galois</pre>
+#print axioms Theorem_Galois</code></pre>
 <p>A result counts as proved here only when <code>#print axioms</code> returns
 <code>[propext, Classical.choice, Quot.sound]</code> and nothing else. If <code>sorryAx</code>
 appears, the theorem is open regardless of what any README, badge, description or chapter says
 about it.</p>
 
-<h2 id="references">References</h2>
+<h2 id="sources">Sources</h2>
+<p class="legend">
+  <span class="tier">pub</span> publisher or primary record &middot;
+  <span class="tier">search</span> bibliographic data from search; PDF not read &middot;
+  <span class="tier">given</span> full text supplied to this repository &middot;
+  <span class="tier">pers</span> personal communication, unverified &middot;
+  <span class="tier bad">retracted</span> recorded error
+</p>
+
+<p><b>Mathematics.</b></p>
 <ul class="refs">
-  <li>A. Movahhedi and A. Salinier, <em>The primitivity of the Galois group of a trinomial</em>,
-    J. London Math. Soc. (2) <b>53</b> (1996), 433&ndash;440.
+  <li><span class="tier">search</span> A. Movahhedi and A. Salinier,
+    <em>The primitivity of the Galois group of a trinomial</em>,
+    J. London Math. Soc. (2) <b>53</b> (1996) 433&ndash;440.
     <a href="https://doi.org/10.1112/jlms/53.3.433">10.1112/jlms/53.3.433</a></li>
-  <li>S. D. Cohen, A. Movahhedi and A. Salinier, <em>Double transitivity of Galois groups of
-    trinomials</em>, Acta Arith. <b>82</b> (1997), 1&ndash;15.</li>
-  <li>S. D. Cohen, A. Movahhedi and A. Salinier, <em>Galois groups of trinomials</em>,
-    J. Algebra <b>222</b> (1999), 561&ndash;573.</li>
-  <li>C. Jordan, <em>Th&eacute;or&egrave;mes sur les groupes primitifs</em>,
-    J. Math. Pures Appl. (2) <b>16</b> (1871), 383&ndash;408.</li>
+  <li><span class="tier">search</span> S. D. Cohen, A. Movahhedi and A. Salinier,
+    <em>Double transitivity of Galois groups of trinomials</em>,
+    Acta Arith. <b>82</b> (1997) 1&ndash;15.</li>
+  <li><span class="tier">search</span> S. D. Cohen, A. Movahhedi and A. Salinier,
+    <em>Galois groups of trinomials</em>, J. Algebra <b>222</b> (1999) 561&ndash;573.</li>
+  <li><span class="tier">pub</span> C. Jordan,
+    <em>Th&eacute;or&egrave;mes sur les groupes primitifs</em>,
+    J. Math. Pures Appl. (2) <b>16</b> (1871) 383&ndash;408.</li>
+  <li><span class="tier bad">retracted</span> &ldquo;On the Galois group of trinomials&rdquo;,
+    J. Algebra <b>182</b> (1996) 322&ndash;333, <code>10.1006/jabr.1996.0172</code> &mdash;
+    <b>no such article</b>. Title, journal, volume, pages and DOI all incorrect. Proposed as a
+    replacement for a <code>[CITE NEEDED]</code> marker, checked, and rejected before commit.</li>
 </ul>
-<p style="color:var(--muted);font-size:.85rem;">Journal, volume, pages and DOI are taken from the
-publisher record and the authors' own publication lists. Nothing on this page cites a section or
-theorem number from inside these papers.</p>
 
-<h2>Contact</h2>
-<div style="display:flex;gap:1.2rem;flex-wrap:wrap;align-items:stretch;margin:1.2rem 0;">
+<p><b>Standards of practice.</b></p>
+<ul class="refs">
+  <li><span class="tier">given</span> H. Cohn, <em>Advice for amateur mathematicians on writing
+    and publishing papers</em>, <a href="https://cohn.mit.edu/advice">cohn.mit.edu/advice</a>.
+    Full text supplied to this repository; the page itself was not fetched.</li>
+  <li><span class="tier">pub</span> T. Tao, <em>Advice on writing papers</em>,
+    <a href="https://terrytao.wordpress.com/advice-on-writing-papers/">terrytao.wordpress.com</a></li>
+  <li><span class="tier">pub</span> M. Abouzaid, N. Srivastava, R. Ward and L. Williams,
+    <em>First Proof Second Batch</em>,
+    <a href="https://arxiv.org/abs/2606.18119">arXiv:2606.18119v1</a> [cs.AI], 16 June 2026.
+    Its four grading categories &mdash; essentially flawless, minor revisions, major revisions,
+    reject &mdash; are used on this page as an evaluation rubric. Tao appears there as a UCLA
+    principal investigator on System B, not as an author or editor.</li>
+  <li><span class="tier">pers</span> Recommendation of the above as a benchmark for
+    &ldquo;flawless&rdquo;. Personal communication; date and channel not recorded.</li>
+</ul>
 
-  <a class="li-card" href="https://www.linkedin.com/in/pg6llc" target="_blank" rel="noopener me"
-     style="flex:1 1 260px;border:1px solid var(--rule);border-radius:8px;padding:1rem 1.2rem;
-            background:rgba(201,168,76,.045);text-decoration:none;border-bottom:1px solid var(--rule);
-            display:block;color:var(--cream);">
-    <div style="font-family:ui-monospace,monospace;font-size:.62rem;letter-spacing:.18em;
-                text-transform:uppercase;color:var(--gold);margin-bottom:.45rem;">LinkedIn</div>
-    <div style="font-size:1.05rem;">Pablo Nogueira Grossi</div>
-    <div style="color:var(--muted);font-size:.83rem;margin-top:.2rem;">
-      G6&nbsp;LLC &middot; Newark, New Jersey &middot; linkedin.com/in/pg6llc</div>
-  </a>
+<p class="fineprint">The three <span class="tier">search</span> entries rest on bibliographic
+search results, not on a review database. MathSciNet or zbMATH Open resolves each in under a
+minute and promotes them to <span class="tier">pub</span>; until that is run, they are recorded at
+the tier they were actually checked at. The <span class="tier bad">retracted</span> line stays
+because a source list with no errors in it is an assertion, while one that records a caught error
+and how it was caught is evidence of a process &mdash; the same reason
+<code>#print axioms</code> outranks a badge.</p>
 
-  <div style="flex:1 1 260px;border:1px solid var(--rule);border-radius:8px;padding:1rem 1.2rem;">
-    <div style="font-family:ui-monospace,monospace;font-size:.62rem;letter-spacing:.18em;
-                text-transform:uppercase;color:var(--gold);margin-bottom:.45rem;">Identifiers</div>
-    <div style="font-size:.88rem;line-height:1.85;">
-      ORCID <a href="https://orcid.org/0009-0000-6496-2186">0009-0000-6496-2186</a><br>
-      <a href="mailto:g6llc@proton.me">g6llc@proton.me</a><br>
-      <a href="https://zenodo.org/communities/principia-orthogona">Zenodo: Principia Orthogona</a>
-    </div>
-  </div>
-</div>
-<p style="color:var(--muted);font-size:.82rem;">Built in-page: no third-party script, no cookies,
-nothing that fails invisibly if a reader blocks trackers.</p>
-
-<h2>Standard of claim</h2>
+<h2 id="standard">Standard of claim</h2>
 <p>Self-reported metadata does not count. A repository description, a README, a CI badge and a
 chapter's prose are assertions <em>about</em> an artifact; only the kernel is evidence. IGP24 works
 the same way &mdash; it discards claimed labels and discriminants in submissions and computes its
@@ -236,16 +309,37 @@ own, and its integrity rules make presenting a baseline pair as new an explicit 
 <p>This repository previously described itself as having proved that the action map is a bijective
 isomorphism for all odd composite <code>n</code>, while the file carried <code>sorry</code>. That
 is corrected, and the correction is recorded rather than quietly applied.</p>
-<p>A second correction, recorded the same way: the obstruction box previously carried the
-Movahhedi&ndash;Salinier reference as <code>[CITE NEEDED]</code>, named from working knowledge. A
-proposed replacement citing <em>On the Galois group of trinomials</em>, J. Algebra <b>182</b>
-(1996), 322&ndash;333, DOI <code>10.1006/jabr.1996.0172</code>, was checked before being committed
-and is <b>fabricated</b> &mdash; no such article exists; title, journal, volume, pages and DOI are
-all wrong. The correct record is in <a href="#references">References</a>. Checking the reference
-also surfaced the reducibility gap now stated in the obstruction: the trinomial results do not
-apply to <code>X^(n+1) &minus; 2X^n + 1</code> without a reduction argument that has not been
-written. Both are noted here because a plausible-looking citation and a plausible-looking
-applicability are the same failure mode as a green badge over a <code>sorry</code>.</p>
+<p>Two later corrections are recorded the same way. The obstruction's Movahhedi&ndash;Salinier
+reference was carried as <code>[CITE NEEDED]</code>, named from working knowledge. A replacement
+was proposed with complete bibliographic fields &mdash; title, journal, volume, pages, DOI &mdash;
+and checking it against the publisher record before commit found that <b>no such article
+exists</b>; only the authors and the year were right. This is the failure mode Table&nbsp;5 of
+<a href="https://arxiv.org/abs/2606.18119">arXiv:2606.18119</a> documents across most graded
+submissions, and it is why nothing on this page cites a theorem number from a PDF that has not
+been read. Checking the reference surfaced the second correction: the trinomial primitivity
+results assume irreducibility, so they do not apply to <code>X^(n+1) &minus; 2X^n + 1</code>
+without a reduction argument that has not been written. A plausible-looking citation and a
+plausible-looking applicability are the same failure mode as a green badge over a
+<code>sorry</code>.</p>
+
+<h2 id="contact">Contact</h2>
+<div class="cards">
+  <a class="card" href="https://www.linkedin.com/in/pg6llc" target="_blank" rel="noopener me">
+    <div class="label">LinkedIn</div>
+    <div class="card-title">Pablo Nogueira Grossi</div>
+    <div class="card-meta">G6&nbsp;LLC &middot; Newark, New Jersey &middot; linkedin.com/in/pg6llc</div>
+  </a>
+  <div class="card">
+    <div class="label">Identifiers</div>
+    <div class="card-list">
+      ORCID <a href="https://orcid.org/0009-0000-6496-2186">0009-0000-6496-2186</a><br>
+      <a href="mailto:g6llc@proton.me">g6llc@proton.me</a><br>
+      <a href="https://zenodo.org/communities/principia-orthogona">Zenodo: Principia Orthogona</a>
+    </div>
+  </div>
+</div>
+<p class="fineprint">Built in-page: no third-party script, no cookies, nothing that fails
+invisibly if a reader blocks trackers.</p>
 
 </div></main>
 
