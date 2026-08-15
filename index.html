@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>galois · n-bonacci Galois groups · IGP24 entry · Principia Orthogona</title>
+<meta name="description" content="Galois groups of the n-bonacci polynomials in Lean 4, and an IGP24 entry built from composita of small-degree number fields. Open steps are marked, not hidden.">
+<style>
+:root{--navy:#1a2744;--navy-2:#111a30;--gold:#c9a84c;--gold-dim:#8a6f2e;--cream:#faf7f0;
+      --mid:#3a4f7a;--rule:rgba(201,168,76,.28);--muted:#a99f8c;--open:#d2a24c;--ok:#7a9471;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--navy);color:var(--cream);
+     font-family:Georgia,'Iowan Old Style',serif;line-height:1.65;}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace}
+header{padding:3rem 1.5rem 2rem;border-bottom:1px solid var(--rule);
+       background:linear-gradient(180deg,var(--navy-2),var(--navy));}
+.wrap{max-width:860px;margin:0 auto;}
+.eyebrow{font-family:ui-monospace,monospace;font-size:.7rem;letter-spacing:.2em;
+         text-transform:uppercase;color:var(--gold);margin:0 0 .7rem;}
+h1{font-size:clamp(1.9rem,4.4vw,2.7rem);margin:0 0 .4rem;font-weight:400;letter-spacing:-.01em;}
+.sub{color:var(--muted);font-size:1rem;max-width:60ch;margin:0;}
+main{padding:0 1.5rem 4rem;}
+h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);
+   font-family:ui-monospace,monospace;font-weight:400;border-bottom:1px solid var(--rule);
+   padding-bottom:.5rem;margin:2.8rem 0 1.1rem;}
+p{margin:0 0 1rem;}
+code{font-family:ui-monospace,monospace;font-size:.88em;background:rgba(201,168,76,.09);
+     padding:.1em .35em;border-radius:3px;}
+pre{background:var(--navy-2);border:1px solid var(--rule);border-radius:6px;padding:1rem 1.1rem;
+    overflow-x:auto;font-family:ui-monospace,monospace;font-size:.8rem;line-height:1.55;}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.9rem;}
+th{text-align:left;font-family:ui-monospace,monospace;font-size:.68rem;letter-spacing:.12em;
+   text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--rule);
+   padding:.5rem .6rem;font-weight:400;}
+td{padding:.5rem .6rem;border-bottom:1px solid rgba(201,168,76,.12);vertical-align:top;}
+.tag{font-family:ui-monospace,monospace;font-size:.66rem;letter-spacing:.08em;
+     padding:.15rem .45rem;border-radius:2px;white-space:nowrap;}
+.t-ok{background:rgba(122,148,113,.16);color:var(--ok);border:1px solid rgba(122,148,113,.4);}
+.t-open{background:rgba(210,162,76,.13);color:var(--open);border:1px solid rgba(210,162,76,.4);}
+.t-ass{background:rgba(140,140,160,.12);color:#a9a9bd;border:1px solid rgba(160,160,190,.3);}
+.box{border:1px solid var(--rule);border-radius:8px;padding:1.2rem 1.4rem;margin:1.6rem 0;
+     background:rgba(201,168,76,.045);}
+.box .label{font-family:ui-monospace,monospace;font-size:.66rem;letter-spacing:.18em;
+     text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3);}
+a:hover{border-bottom-color:var(--gold);}
+.stats{display:flex;gap:2.2rem;flex-wrap:wrap;margin-top:1.5rem;}
+.stat b{display:block;font-size:1.7rem;font-weight:400;}
+.stat span{display:block;font-family:ui-monospace,monospace;font-size:.66rem;
+     letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+footer{border-top:1px solid var(--rule);padding:2rem 1.5rem 3rem;color:var(--muted);font-size:.8rem;}
+</style>
+</head><body>
+
+<header><div class="wrap">
+  <p class="eyebrow">Principia Orthogona &middot; G6 LLC &middot; Newark NJ</p>
+  <h1>galois</h1>
+  <p class="sub">Galois groups of the n-bonacci polynomials in Lean&nbsp;4, and an entry to
+  IGP24 built from composita of small-degree number fields. Open steps are marked, not hidden.</p>
+  <div class="stats">
+    <div class="stat"><b>1</b><span>lemma closed</span></div>
+    <div class="stat"><b style="color:var(--open)">1</b><span>sorry, obstruction named</span></div>
+    <div class="stat"><b>203</b><span>IGP24 polynomials</span></div>
+    <div class="stat"><b>202</b><span>distinct fields</span></div>
+  </div>
+</div></header>
+
+<main><div class="wrap">
+
+<h2>The object</h2>
+<p>For <code>n &ge; 2</code> the n-bonacci polynomial is
+<code>p_n(X) = X^n &minus; (X^(n-1) + &hellip; + X + 1)</code>. Its dominant real root is the
+n-bonacci constant: the golden ratio at <code>n=2</code>, the tribonacci constant
+&eta;&nbsp;&asymp;&nbsp;1.8393 at <code>n=3</code>, increasing to &tau;&nbsp;=&nbsp;2. That ladder
+is the algebraic spine of the series.</p>
+<p>Multiplying by <code>(X&minus;1)</code> gives a trinomial,
+<code>X^(n+1) &minus; 2X^n + 1</code>, which is why the trinomial literature applies.</p>
+
+<h2>Lean status</h2>
+<table>
+<tr><th>Result</th><th>Status</th><th>Evidence</th></tr>
+<tr><td class="mono">nBonacci_action_injective</td><td><span class="tag t-ok">VERIFIED</span></td>
+    <td>Mathlib <code>galActionHom_injective</code>, applied directly. No <code>sorry</code>.</td></tr>
+<tr><td class="mono">nBonacci_action_bijective</td><td><span class="tag t-open">OPEN</span></td>
+    <td><code>sorry</code>. Surjectivity. See the obstruction.</td></tr>
+<tr><td class="mono">Theorem_Galois</td><td><span class="tag t-open">OPEN</span></td>
+    <td>Compiles, but derives from the line above and inherits its <code>sorry</code>.</td></tr>
+<tr><td>Irreducibility of <code>p_n</code></td><td><span class="tag t-ass">ASSUMED</span></td>
+    <td>Carried as hypothesis <code>hirr</code>, not discharged here.</td></tr>
+</table>
+
+<div class="box">
+  <div class="label">The obstruction</div>
+  <p>For <b>prime</b> degree <code>p</code>, a transitive subgroup of <code>S_p</code> containing a
+  transposition is all of <code>S_p</code>, and surjectivity closes at once. <b>Odd composite
+  <code>n</code> defeats that route.</b> The chain becomes irreducible &rArr; transitive, then
+  transitive + <b>primitive</b> + a transposition &rArr; <code>S_n</code> by Jordan &mdash; so
+  primitivity is the load-bearing step. For this trinomial family the relevant primitivity
+  results are Movahhedi&ndash;Salinier, and <b>they are not in Mathlib</b>. Formalizing them is
+  the prerequisite; no tactic search closes this <code>sorry</code> without them.</p>
+  <p style="margin:0;color:var(--muted);font-size:.85rem;">The exact
+  Movahhedi&ndash;Salinier reference is <span class="mono">[CITE NEEDED]</span> &mdash; named from
+  working knowledge, not yet checked against the literature in this repository.</p>
+</div>
+
+<h2>IGP24 entry</h2>
+<p><a href="https://competition.sair.foundation/competitions/igp24/overview">IGP24</a> asks for
+explicit degree-24 integer polynomials realizing as many of the 25,000 transitive groups
+<code>24T1</code>&ndash;<code>24T25000</code>, and their signatures, as possible. The frozen
+LMFDB-derived baseline covers 286 labels and 622 of the 165,836 possible
+<code>(24Tt, r)</code> pairs, so most of the map is blank.</p>
+
+<p><b>Method.</b> <code>24 = 2&middot;12 = 3&middot;8 = 4&middot;6</code>. A compositum of
+linearly-disjoint subfields is <b>imprimitive by construction</b> &mdash; the field contains a
+proper subfield &mdash; which is where most of the 25,000 groups live and where random sparse
+search does not go. Random polynomials land in <code>S24</code> or <code>A24</code>, which the
+baseline certainly holds.</p>
+
+<pre>min poly of &alpha; + c&beta;  =  Res_y( f(y), g(x &minus; cy) )     deg f = a, deg g = b, ab = 24</pre>
+
+<p><b>Deduplication.</b> Varying <code>c</code> generates the <em>same</em> field, so those are not
+distinct submissions. Candidates were fingerprinted by factorization pattern mod the first 25
+primes &mdash; a strong field invariant &mdash; and only the smallest <code>|poldisc|</code>
+generator per field was kept. 324 constructions collapsed to <b>202 distinct fields</b>.</p>
+
+<p><b>The modulo ladder.</b> By Chebotarev, the factorization degree pattern of <code>f</code>
+mod&nbsp;<code>p</code> is the cycle type of a Frobenius element, so climbing primes reads the
+group's cycle types off without a computer algebra licence. Candidates with few, block-structured
+cycle types have small imprimitive groups; those throwing 22- and 23-cycles are
+<code>S24</code>/<code>A24</code>.</p>
+
+<table>
+<tr><th>Construction</th><th>cycle types</th><th>max cycle</th><th>log&#8321;&#8320;|poldisc|</th></tr>
+<tr><td class="mono">x&#8308;+1 &times; x&#8310;+x&sup3;+1</td><td>3</td><td>6</td><td>119</td></tr>
+<tr><td class="mono">x&#8308;+1 &times; x&#8310;&minus;x&sup3;&minus;1</td><td>3</td><td>6</td><td>122</td></tr>
+<tr><td class="mono">x&sup3;&minus;x&minus;1 &times; x&#8312;+1</td><td>5</td><td>12</td><td>124</td></tr>
+<tr><td class="mono">x&#8308;&minus;x&sup2;&minus;1 &times; x&#8310;+x&sup3;+1</td><td>5</td><td>12</td><td>124</td></tr>
+<tr><td class="mono">&hellip; 66 more profiled</td><td>6&ndash;26</td><td>12&ndash;22</td><td>99&ndash;328</td></tr>
+</table>
+
+<div class="box">
+  <div class="label">What is not claimed</div>
+  <p>No <code>24Tt</code> label was computed locally: this entry was prepared without Magma, and
+  the official verifier assigns the labels. The submission was <b>not</b> filtered against the
+  frozen LMFDB baseline, so an unknown fraction of these fields is already covered &mdash; the
+  cyclotomic ones almost certainly are (<code>x&#8308;+1 &times; x&#8310;+x&sup3;+1</code> is
+  &#8474;(&zeta;&#8327;&#8322;), degree &phi;(72)=24, abelian). Expected yield is unknown, not
+  zero. <b>Nothing here should be described as a discovery until the verifier says so.</b></p>
+</div>
+
+<h2>Reproducing</h2>
+<pre>python3 gen_igp24.py        # 324 constructions -> 202 distinct fields
+lake exe cache get &amp;&amp; lake build
+#print axioms Theorem_Galois</pre>
+<p>A result counts as proved here only when <code>#print axioms</code> returns
+<code>[propext, Classical.choice, Quot.sound]</code> and nothing else. If <code>sorryAx</code>
+appears, the theorem is open regardless of what any README, badge, description or chapter says
+about it.</p>
+
+<h2>Standard of claim</h2>
+<p>Self-reported metadata does not count. A repository description, a README, a CI badge and a
+chapter's prose are assertions <em>about</em> an artifact; only the kernel is evidence. IGP24 works
+the same way &mdash; it discards claimed labels and discriminants in submissions and computes its
+own, and its integrity rules make presenting a baseline pair as new an explicit violation.</p>
+<p>This repository previously described itself as having proved that the action map is a bijective
+isomorphism for all odd composite <code>n</code>, while the file carried <code>sorry</code>. That
+is corrected, and the correction is recorded rather than quietly applied.</p>
+
+</div></main>
+
+<footer><div class="wrap">
+  Principia Orthogona &middot; galois &middot; G6 LLC &middot; Pablo Nogueira Grossi &middot; Newark NJ &middot; 2026<br>
+  ORCID <a href="https://orcid.org/0009-0000-6496-2186">0009-0000-6496-2186</a> &middot;
+  <a href="mailto:g6llc@proton.me">g6llc@proton.me</a> &middot;
+  <a href="https://zenodo.org/communities/principia-orthogona">Zenodo: Principia Orthogona</a><br>
+  Lean source MIT &middot; prose CC BY-NC-ND 4.0.
+  Independent research; not peer-reviewed. Open steps are marked <span class="tag t-open">OPEN</span>.
+</div></footer>
+
+</body></html>
