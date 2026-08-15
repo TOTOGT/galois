@@ -58,8 +58,9 @@ footer{border-top:1px solid var(--rule);padding:2rem 1.5rem 3rem;color:var(--mut
   <div class="stats">
     <div class="stat"><b>1</b><span>lemma closed</span></div>
     <div class="stat"><b style="color:var(--open)">1</b><span>sorry, obstruction named</span></div>
-    <div class="stat"><b>203</b><span>IGP24 polynomials</span></div>
-    <div class="stat"><b>202</b><span>distinct fields</span></div>
+    <div class="stat"><b>588</b><span>IGP24 polynomials</span></div>
+    <div class="stat"><b>587</b><span>distinct fields</span></div>
+    <div class="stat"><b>195</b><span>distinct spectra</span></div>
   </div>
 </div></header>
 
@@ -108,7 +109,7 @@ explicit degree-24 integer polynomials realizing as many of the 25,000 transitiv
 LMFDB-derived baseline covers 286 labels and 622 of the 165,836 possible
 <code>(24Tt, r)</code> pairs, so most of the map is blank.</p>
 
-<p><b>Method.</b> <code>24 = 2&middot;12 = 3&middot;8 = 4&middot;6</code>. A compositum of
+<p><b>Method.</b> <code>24 = 2&middot;12 = 3&middot;8 = 4&middot;6 = 2&middot;2&middot;6 = 2&middot;3&middot;4</code>. A compositum of
 linearly-disjoint subfields is <b>imprimitive by construction</b> &mdash; the field contains a
 proper subfield &mdash; which is where most of the 25,000 groups live and where random sparse
 search does not go. Random polynomials land in <code>S24</code> or <code>A24</code>, which the
@@ -119,7 +120,7 @@ baseline certainly holds.</p>
 <p><b>Deduplication.</b> Varying <code>c</code> generates the <em>same</em> field, so those are not
 distinct submissions. Candidates were fingerprinted by factorization pattern mod the first 25
 primes &mdash; a strong field invariant &mdash; and only the smallest <code>|poldisc|</code>
-generator per field was kept. 324 constructions collapsed to <b>202 distinct fields</b>.</p>
+generator per field was kept. 754 constructions collapsed to <b>587 distinct fields</b>. Triple composita (2&middot;2&middot;6, 2&middot;3&middot;4) carry nested block systems and reach groups the pair constructions cannot.</p>
 
 <p><b>The modulo ladder.</b> By Chebotarev, the factorization degree pattern of <code>f</code>
 mod&nbsp;<code>p</code> is the cycle type of a Frobenius element, so climbing primes reads the
@@ -146,14 +147,55 @@ cycle types have small imprimitive groups; those throwing 22- and 23-cycles are
   zero. <b>Nothing here should be described as a discovery until the verifier says so.</b></p>
 </div>
 
+
+<div class="box">
+  <div class="label">Expected yield, stated honestly</div>
+  <p>588 polynomials is not 588 results. Each team is credited <b>once</b> per
+  <code>(24Tt, r)</code> pair however many polynomials realize it, so the binding constraint is
+  group diversity, not throughput. Across the 587 fields the mod-p ladder finds
+  <b>195 distinct cycle-type spectra</b> &mdash; different spectra force different Galois groups,
+  so that is a lower bound on distinct groups. 113 are singletons. The largest cluster has 49
+  polynomials sharing one spectrum: the construction saturating.</p>
+  <p style="margin:0;">That is why the 200,000-polynomials-per-day ceiling is not the lever.
+  More pairs come from new structural families, not more lines.</p>
+</div>
+
 <h2>Reproducing</h2>
-<pre>python3 gen_igp24.py        # 324 constructions -> 202 distinct fields
+<pre>python3 gen_igp24_v2.py     # 754 constructions -> 587 distinct fields
 lake exe cache get &amp;&amp; lake build
 #print axioms Theorem_Galois</pre>
 <p>A result counts as proved here only when <code>#print axioms</code> returns
 <code>[propext, Classical.choice, Quot.sound]</code> and nothing else. If <code>sorryAx</code>
 appears, the theorem is open regardless of what any README, badge, description or chapter says
 about it.</p>
+
+
+<h2>Contact</h2>
+<div style="display:flex;gap:1.2rem;flex-wrap:wrap;align-items:stretch;margin:1.2rem 0;">
+
+  <a class="li-card" href="https://www.linkedin.com/in/pg6llc" target="_blank" rel="noopener me"
+     style="flex:1 1 260px;border:1px solid var(--rule);border-radius:8px;padding:1rem 1.2rem;
+            background:rgba(201,168,76,.045);text-decoration:none;border-bottom:1px solid var(--rule);
+            display:block;color:var(--cream);">
+    <div style="font-family:ui-monospace,monospace;font-size:.62rem;letter-spacing:.18em;
+                text-transform:uppercase;color:var(--gold);margin-bottom:.45rem;">LinkedIn</div>
+    <div style="font-size:1.05rem;">Pablo Nogueira Grossi</div>
+    <div style="color:var(--muted);font-size:.83rem;margin-top:.2rem;">
+      G6&nbsp;LLC &middot; Newark, New Jersey &middot; linkedin.com/in/pg6llc</div>
+  </a>
+
+  <div style="flex:1 1 260px;border:1px solid var(--rule);border-radius:8px;padding:1rem 1.2rem;">
+    <div style="font-family:ui-monospace,monospace;font-size:.62rem;letter-spacing:.18em;
+                text-transform:uppercase;color:var(--gold);margin-bottom:.45rem;">Identifiers</div>
+    <div style="font-size:.88rem;line-height:1.85;">
+      ORCID <a href="https://orcid.org/0009-0000-6496-2186">0009-0000-6496-2186</a><br>
+      <a href="mailto:g6llc@proton.me">g6llc@proton.me</a><br>
+      <a href="https://zenodo.org/communities/principia-orthogona">Zenodo: Principia Orthogona</a>
+    </div>
+  </div>
+</div>
+<p style="color:var(--muted);font-size:.82rem;">Built in-page: no third-party script, no cookies,
+nothing that fails invisibly if a reader blocks trackers.</p>
 
 <h2>Standard of claim</h2>
 <p>Self-reported metadata does not count. A repository description, a README, a CI badge and a
