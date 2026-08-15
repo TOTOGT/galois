@@ -46,6 +46,9 @@ a:hover{border-bottom-color:var(--gold);}
 .stat b{display:block;font-size:1.7rem;font-weight:400;}
 .stat span{display:block;font-family:ui-monospace,monospace;font-size:.66rem;
      letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.refs{list-style:none;padding:0;margin:1.1rem 0;font-size:.88rem;}
+.refs li{padding:.55rem 0;border-bottom:1px solid rgba(201,168,76,.12);}
+.refs li:last-child{border-bottom:none;}
 footer{border-top:1px solid var(--rule);padding:2rem 1.5rem 3rem;color:var(--muted);font-size:.8rem;}
 </style>
 </head><body>
@@ -73,7 +76,9 @@ n-bonacci constant: the golden ratio at <code>n=2</code>, the tribonacci constan
 &eta;&nbsp;&asymp;&nbsp;1.8393 at <code>n=3</code>, increasing to &tau;&nbsp;=&nbsp;2. That ladder
 is the algebraic spine of the series.</p>
 <p>Multiplying by <code>(X&minus;1)</code> gives a trinomial,
-<code>X^(n+1) &minus; 2X^n + 1</code>, which is why the trinomial literature applies.</p>
+<code>X^(n+1) &minus; 2X^n + 1</code>. That is what puts the trinomial literature in range &mdash;
+but the trinomial so obtained is <b>reducible by construction</b>, which is a hypothesis failure
+rather than a detail. See the obstruction.</p>
 
 <h2>Lean status</h2>
 <table>
@@ -94,12 +99,23 @@ is the algebraic spine of the series.</p>
   transposition is all of <code>S_p</code>, and surjectivity closes at once. <b>Odd composite
   <code>n</code> defeats that route.</b> The chain becomes irreducible &rArr; transitive, then
   transitive + <b>primitive</b> + a transposition &rArr; <code>S_n</code> by Jordan &mdash; so
-  primitivity is the load-bearing step. For this trinomial family the relevant primitivity
-  results are Movahhedi&ndash;Salinier, and <b>they are not in Mathlib</b>. Formalizing them is
-  the prerequisite; no tactic search closes this <code>sorry</code> without them.</p>
-  <p style="margin:0;color:var(--muted);font-size:.85rem;">The exact
-  Movahhedi&ndash;Salinier reference is <span class="mono">[CITE NEEDED]</span> &mdash; named from
-  working knowledge, not yet checked against the literature in this repository.</p>
+  primitivity is the load-bearing step. The relevant primitivity results for trinomials are
+  Movahhedi&ndash;Salinier (1996) and Cohen&ndash;Movahhedi&ndash;Salinier (1997, 1999), and
+  <b>they are not in Mathlib</b>. Formalizing them is a prerequisite; no tactic search closes this
+  <code>sorry</code> without them.</p>
+  <p><b>A second gap sits in front of that one.</b> Those theorems are statements about
+  <em>irreducible</em> trinomials, and their permutation action is on the full root set of the
+  trinomial. Here <code>X^(n+1) &minus; 2X^n + 1</code> factors as
+  <code>(X&minus;1)&middot;p_n(X)</code> over <code>&#8474;</code>, so it is reducible and the
+  action on its <code>n+1</code> roots fixes <code>1</code> and is not transitive. The hypotheses
+  therefore do not apply as stated, and the transfer from the trinomial to <code>p_n</code> is
+  itself <span class="tag t-open">OPEN</span> &mdash; a reduction argument to be written, not a
+  lookup. Citing the literature does not discharge it.</p>
+  <p style="margin:0;color:var(--muted);font-size:.85rem;">Bibliographic details of the three
+  papers are verified against the publishers of record and listed under
+  <a href="#references">References</a>. No theorem number inside any of them is cited here: the
+  PDFs have not been read against this repository, and a numbered result quoted from memory is a
+  claim, not a citation.</p>
 </div>
 
 <h2>IGP24 entry</h2>
@@ -169,6 +185,21 @@ lake exe cache get &amp;&amp; lake build
 appears, the theorem is open regardless of what any README, badge, description or chapter says
 about it.</p>
 
+<h2 id="references">References</h2>
+<ul class="refs">
+  <li>A. Movahhedi and A. Salinier, <em>The primitivity of the Galois group of a trinomial</em>,
+    J. London Math. Soc. (2) <b>53</b> (1996), 433&ndash;440.
+    <a href="https://doi.org/10.1112/jlms/53.3.433">10.1112/jlms/53.3.433</a></li>
+  <li>S. D. Cohen, A. Movahhedi and A. Salinier, <em>Double transitivity of Galois groups of
+    trinomials</em>, Acta Arith. <b>82</b> (1997), 1&ndash;15.</li>
+  <li>S. D. Cohen, A. Movahhedi and A. Salinier, <em>Galois groups of trinomials</em>,
+    J. Algebra <b>222</b> (1999), 561&ndash;573.</li>
+  <li>C. Jordan, <em>Th&eacute;or&egrave;mes sur les groupes primitifs</em>,
+    J. Math. Pures Appl. (2) <b>16</b> (1871), 383&ndash;408.</li>
+</ul>
+<p style="color:var(--muted);font-size:.85rem;">Journal, volume, pages and DOI are taken from the
+publisher record and the authors' own publication lists. Nothing on this page cites a section or
+theorem number from inside these papers.</p>
 
 <h2>Contact</h2>
 <div style="display:flex;gap:1.2rem;flex-wrap:wrap;align-items:stretch;margin:1.2rem 0;">
@@ -205,6 +236,16 @@ own, and its integrity rules make presenting a baseline pair as new an explicit 
 <p>This repository previously described itself as having proved that the action map is a bijective
 isomorphism for all odd composite <code>n</code>, while the file carried <code>sorry</code>. That
 is corrected, and the correction is recorded rather than quietly applied.</p>
+<p>A second correction, recorded the same way: the obstruction box previously carried the
+Movahhedi&ndash;Salinier reference as <code>[CITE NEEDED]</code>, named from working knowledge. A
+proposed replacement citing <em>On the Galois group of trinomials</em>, J. Algebra <b>182</b>
+(1996), 322&ndash;333, DOI <code>10.1006/jabr.1996.0172</code>, was checked before being committed
+and is <b>fabricated</b> &mdash; no such article exists; title, journal, volume, pages and DOI are
+all wrong. The correct record is in <a href="#references">References</a>. Checking the reference
+also surfaced the reducibility gap now stated in the obstruction: the trinomial results do not
+apply to <code>X^(n+1) &minus; 2X^n + 1</code> without a reduction argument that has not been
+written. Both are noted here because a plausible-looking citation and a plausible-looking
+applicability are the same failure mode as a green badge over a <code>sorry</code>.</p>
 
 </div></main>
 
