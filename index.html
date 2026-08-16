@@ -102,9 +102,9 @@ footer{border-top:1px solid var(--rule);padding:2rem 1.5rem 3rem;
   <div class="stats">
     <div class="stat"><b>1</b><span>lemma closed</span></div>
     <div class="stat is-open"><b>1</b><span>sorry, obstruction named</span></div>
-    <div class="stat"><b>1174</b><span>IGP24 polynomials submitted</span></div>
-    <div class="stat"><b>1124</b><span>accepted by verifier</span></div>
-    <div class="stat"><b>262</b><span>distinct (24Tt, r) pairs returned</span></div>
+    <div class="stat"><b>1468</b><span>IGP24 polynomials, all accepted</span></div>
+    <div class="stat"><b>159</b><span>distinct 24Tt labels returned</span></div>
+    <div class="stat"><b>304</b><span>distinct (24Tt, r) pairs returned</span></div>
     <div class="stat"><b>16</b><span>lmfdb baseline pairs unlocked</span></div>
   </div>
 </div></header>
@@ -230,16 +230,27 @@ factorization is performed or needed.</p>
 <tbody>
 <tr><td class="num">15 Aug 17:37</td><td class="num">588</td><td class="num">588</td>
     <td class="num">31</td><td class="num">39</td>
-    <td><span class="tag t-ok">SCORED</span> 34 pairs scoreable</td></tr>
+    <td><span class="tag t-ok">SCORED</span> 34 scoreable, 16 unlocked</td></tr>
 <tr><td class="num">16 Aug 06:03</td><td class="num">450</td><td class="num">450</td>
     <td class="num">121</td><td class="num">213</td>
-    <td><span class="tag t-open">PENDING</span></td></tr>
+    <td><span class="tag t-open">PENDING</span> composita, r&nbsp;=&nbsp;0&hellip;24</td></tr>
 <tr><td class="num">16 Aug 06:44</td><td class="num">86</td><td class="num">86</td>
     <td class="num">10</td><td class="num">10</td>
-    <td><span class="tag t-open">PENDING</span></td></tr>
-<tr><td class="num">16 Aug, towers</td><td class="num">50&ndash;238</td><td>&mdash;</td>
-    <td>&mdash;</td><td>&mdash;</td>
-    <td><span class="tag t-open">NOT YET RETURNED</span></td></tr>
+    <td><span class="tag t-open">PENDING</span> r=20 composita</td></tr>
+<tr><td class="num">16 Aug 11:27</td><td class="num">43</td><td class="num">43</td>
+    <td class="num">7</td><td class="num">7</td>
+    <td><span class="tag t-open">PENDING</span> r=20 tower</td></tr>
+<tr><td class="num">16 Aug 11:36</td><td class="num">57</td><td class="num">57</td>
+    <td class="num">16</td><td class="num">16</td>
+    <td><span class="tag t-open">PENDING</span> r=16 tower</td></tr>
+<tr><td class="num">16 Aug 11:46</td><td class="num">6</td><td class="num">6</td>
+    <td class="num">3</td><td class="num">3</td>
+    <td><span class="tag t-open">PENDING</span> redundant, see below</td></tr>
+<tr><td class="num">16 Aug 11:52</td><td class="num">238</td><td class="num">238</td>
+    <td class="num">5</td><td class="num">20</td>
+    <td><span class="tag t-open">PENDING</span> towers r=22,18,14,10</td></tr>
+<tr><td class="num"><b>union</b></td><td class="num"><b>1468</b></td><td class="num"><b>1468</b></td>
+    <td class="num"><b>159</b></td><td class="num"><b>304</b></td><td>&mdash;</td></tr>
 </tbody>
 </table>
 </div>
@@ -270,25 +281,45 @@ discriminants are structurally small.</p>
 </div>
 
 <h3>What the tower reaches</h3>
-<p>Locally verified &mdash; monic degree 24, unit content, nonzero constant term, irreducible over
-<code>&#8474;</code>, real-root count by Sturm &mdash; and submitted; labels not yet returned.</p>
+<p>Predicted class counts are from the local Frobenius clustering; pair counts are what the
+verifier returned.</p>
 <div class="tablewrap">
 <table>
-<thead><tr><th>j</th><th>r</th><th>classes</th><th>log&#8321;&#8320;|poldisc|</th><th>reachable by compositum?</th></tr></thead>
+<thead><tr><th>submission</th><th>signatures</th><th>predicted</th><th>returned pairs</th><th>returned labels</th></tr></thead>
 <tbody>
-<tr><td class="num">1</td><td class="num">22</td><td class="num">5</td><td class="num">71&ndash;279</td><td>no</td></tr>
-<tr><td class="num">2</td><td class="num">20</td><td class="num">7</td><td class="num">84&ndash;&hellip;</td><td>yes (2&middot;10)</td></tr>
-<tr><td class="num">3</td><td class="num">18</td><td class="num">5</td><td class="num">70&ndash;95</td><td>yes (3&middot;6)</td></tr>
-<tr><td class="num">4</td><td class="num">16</td><td class="num">12</td><td class="num">36&ndash;206</td><td>yes (2&middot;8, 4&middot;4)</td></tr>
-<tr><td class="num">5</td><td class="num">14</td><td class="num">5</td><td class="num">72&ndash;256</td><td>no</td></tr>
-<tr><td class="num">7</td><td class="num">10</td><td class="num">5</td><td class="num">78&ndash;256</td><td>no</td></tr>
+<tr><td>r=20 tower</td><td class="num">20</td><td class="num">7</td><td class="num">7</td><td class="num">7</td></tr>
+<tr><td>towers</td><td class="num">22, 18, 14, 10</td><td class="num">20</td><td class="num">20</td><td class="num">5</td></tr>
+<tr><td>r=16 tower</td><td class="num">16</td><td class="num">12</td><td class="num">16</td><td class="num">16</td></tr>
+<tr><td>r=20 composita</td><td class="num">20</td><td class="num">9</td><td class="num">10</td><td class="num">10</td></tr>
 </tbody>
 </table>
 </div>
-<p>At <code>r=20</code>, <code>r=18</code> and <code>r=16</code> the tower classes were checked
-against the compositum classes already submitted at the same signature and <b>none collided</b>
-&mdash; consistent with the different block structure (<code>C&#8322; wr G&#8321;&#8322;</code>,
-twelve blocks of size 2, against a product action).</p>
+<div class="box correction">
+  <div class="label">The tower is a signature machine, not a group machine</div>
+  <p>The 238-line submission returned <b>exactly the 20 pairs predicted</b> &mdash; but from only
+  <b>five distinct labels</b>: <code>24T14744</code>, <code>24T14745</code>, <code>24T16693</code>,
+  <code>24T16694</code>, <code>24T19635</code>, <b>the identical set at every one of
+  r&nbsp;=&nbsp;22,&nbsp;18,&nbsp;14,&nbsp;10</b>. Sliding <code>k/m</code> along the conjugate
+  ladder moves the signature and leaves the group where it was. Since credit is per
+  <code>(24Tt, r)</code>, five groups still bought twenty pairs &mdash; but the group axis
+  contributed nothing, and the per-signature clustering could not have detected this, because it
+  never compared across signatures.</p>
+  <p>All five labels have <b>non-square <code>a&#8320;</code></b>. Every one of the 238 lines sat in
+  a single rational square class, so the one lever that does move the group was never pulled in the
+  submission that most needed it. The adjacent label numbers &mdash; 14744/14745 and 16693/16694
+  &mdash; are what an index-2 relation looks like in the <code>24Tt</code> ordering, which is where
+  the other square class would have landed.</p>
+  <p><b>A six-line submission was wasted on this.</b> It added &alpha; from the opposite square
+  class as companions to the <code>r=16</code> tower lines; the verifier returned 3 pairs, all
+  three already present in that earlier submission. The earlier file already spanned both square
+  classes &mdash; six classes with square <code>a&#8320;</code> and six without, a fact measured
+  before the companion file was built and not consulted while building it.</p>
+</div>
+<p>None of the 20 tower pairs appears in the competition's published uncovered-signature list, so
+the construction landed entirely on ground already held by someone. The list has 2,722 open cells
+across 1,253 groups, and <code>r=22</code> appears nowhere in it &mdash; equally consistent with
+those cells being covered and with their never having been enumerated, and this page does not
+choose between those readings.</p>
 <p>The smallest lines sit at <code>log&#8321;&#8320;|poldisc| = 36</code>, a root discriminant of
 about 31.6 at degree 24. Those all have <code>|a&#8320;| = 1</code>: &alpha; is a unit, so the
 relative different divides <code>(2)</code>. A unit is a square class representative, which
