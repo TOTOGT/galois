@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>galois · n-bonacci Galois groups · IGP24 entry · Principia Orthogona</title>
-<meta name="description" content="Galois groups of the n-bonacci polynomials in Lean 4, and an IGP24 entry built from composita of small-degree number fields. Open steps are marked, not hidden.">
+<meta name="description" content="Galois groups of the n-bonacci polynomials in Lean 4, and an IGP24 entry built from composita and quadratic towers over totally real fields. Open steps are marked, not hidden.">
 <meta name="author" content="Pablo Nogueira Grossi">
 <meta name="color-scheme" content="dark">
 <style>
@@ -20,8 +20,6 @@ body{margin:0;background:var(--navy);color:var(--cream);
      font-family:var(--serif);line-height:1.65;}
 .wrap{max-width:860px;margin:0 auto;}
 .mono{font-family:var(--mono)}
-
-/* ---------- masthead ---------- */
 header{padding:3rem 1.5rem 2.25rem;border-bottom:1px solid var(--rule);
        background:linear-gradient(180deg,var(--navy-2),var(--navy));}
 .eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;
@@ -29,20 +27,17 @@ header{padding:3rem 1.5rem 2.25rem;border-bottom:1px solid var(--rule);
 h1{font-size:clamp(1.9rem,4.4vw,2.7rem);margin:0 0 .5rem;
    font-weight:400;letter-spacing:-.01em;line-height:1.1;}
 .sub{color:var(--muted);font-size:1rem;max-width:62ch;margin:0;}
-
-/* ---------- stat strip ---------- */
 .stats{display:flex;gap:1.25rem 2.4rem;flex-wrap:wrap;margin-top:1.75rem;}
 .stat{display:flex;flex-direction:column;gap:.3rem;min-width:6.5rem;}
 .stat b{font-size:1.7rem;font-weight:400;line-height:1;font-variant-numeric:tabular-nums;}
 .stat span{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;
            line-height:1.4;text-transform:uppercase;color:var(--muted);}
 .stat.is-open b{color:var(--open);}
-
-/* ---------- body ---------- */
 main{padding:0 1.5rem 4rem;}
 h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);
    font-family:var(--mono);font-weight:400;border-bottom:1px solid var(--rule);
    padding-bottom:.5rem;margin:2.8rem 0 1.1rem;scroll-margin-top:1rem;}
+h3{font-size:.95rem;font-weight:400;color:var(--cream);margin:1.6rem 0 .6rem;}
 p{margin:0 0 1rem;}
 a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3);}
 a:hover,a:focus{border-bottom-color:var(--gold);}
@@ -53,16 +48,13 @@ pre{background:var(--navy-2);border:1px solid var(--rule);border-radius:6px;
     padding:1rem 1.1rem;overflow-x:auto;font-family:var(--mono);
     font-size:.8rem;line-height:1.55;}
 pre code{background:none;padding:0;}
-
-/* ---------- tables ---------- */
 .tablewrap{overflow-x:auto;margin:1.2rem 0;}
 table{width:100%;border-collapse:collapse;font-size:.9rem;}
 th{text-align:left;font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;
    text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--rule);
    padding:.5rem .6rem;font-weight:400;white-space:nowrap;}
 td{padding:.5rem .6rem;border-bottom:1px solid var(--rule-soft);vertical-align:top;}
-
-/* ---------- status tags ---------- */
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;}
 .tag{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;
      padding:.15rem .45rem;border-radius:2px;white-space:nowrap;
      display:inline-block;}
@@ -70,16 +62,14 @@ td{padding:.5rem .6rem;border-bottom:1px solid var(--rule-soft);vertical-align:t
 .t-open{background:rgba(210,162,76,.13);color:var(--open);border:1px solid rgba(210,162,76,.4);}
 .t-ass{background:rgba(140,140,160,.12);color:#a9a9bd;border:1px solid rgba(160,160,190,.3);}
 .t-bad{background:rgba(192,122,106,.13);color:var(--warn);border:1px solid rgba(192,122,106,.4);}
-
-/* ---------- callout boxes ---------- */
 .box{border:1px solid var(--rule);border-radius:8px;padding:1.2rem 1.4rem;
      margin:1.6rem 0;background:var(--wash);}
 .box > :last-child{margin-bottom:0;}
+.box.correction{border-color:rgba(192,122,106,.45);background:rgba(192,122,106,.05);}
+.box.correction .label{color:var(--warn);}
 .label{font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;
        text-transform:uppercase;color:var(--gold);margin-bottom:.55rem;}
 .fineprint{color:var(--muted);font-size:.85rem;}
-
-/* ---------- reference + source lists ---------- */
 .refs{list-style:none;padding:0;margin:1.1rem 0;font-size:.88rem;}
 .refs li{padding:.6rem 0;border-bottom:1px solid var(--rule-soft);}
 .refs li:last-child{border-bottom:none;}
@@ -90,8 +80,6 @@ td{padding:.5rem .6rem;border-bottom:1px solid var(--rule-soft);vertical-align:t
 .refs .tier.bad{color:var(--warn);border-color:rgba(192,122,106,.4);}
 .legend{font-family:var(--mono);font-size:.7rem;color:var(--muted);
         line-height:1.9;margin:0 0 1rem;}
-
-/* ---------- cards ---------- */
 .cards{display:flex;gap:1.2rem;flex-wrap:wrap;align-items:stretch;margin:1.2rem 0;}
 .card{flex:1 1 260px;border:1px solid var(--rule);border-radius:8px;
       padding:1rem 1.2rem;background:var(--wash);}
@@ -101,26 +89,25 @@ a.card:hover{border-color:var(--gold);}
 .card-title{font-size:1.05rem;}
 .card-meta{color:var(--muted);font-size:.83rem;margin-top:.2rem;}
 .card-list{font-size:.88rem;line-height:1.9;}
-
 footer{border-top:1px solid var(--rule);padding:2rem 1.5rem 3rem;
        color:var(--muted);font-size:.8rem;}
 </style>
 </head><body>
-
 <header><div class="wrap">
   <p class="eyebrow">Principia Orthogona &middot; G6 LLC &middot; Newark NJ</p>
   <h1>galois</h1>
   <p class="sub">Galois groups of the n-bonacci polynomials in Lean&nbsp;4, and an entry to
-  IGP24 built from composita of small-degree number fields. Open steps are marked, not hidden.</p>
+  IGP24 built from composita of small-degree number fields and quadratic towers over totally real
+  ones. Open steps are marked, not hidden.</p>
   <div class="stats">
     <div class="stat"><b>1</b><span>lemma closed</span></div>
     <div class="stat is-open"><b>1</b><span>sorry, obstruction named</span></div>
-    <div class="stat"><b>588</b><span>IGP24 polynomials</span></div>
-    <div class="stat"><b>587</b><span>distinct fields</span></div>
-    <div class="stat"><b>195</b><span>distinct spectra</span></div>
+    <div class="stat"><b>1174</b><span>IGP24 polynomials submitted</span></div>
+    <div class="stat"><b>1124</b><span>accepted by verifier</span></div>
+    <div class="stat"><b>262</b><span>distinct (24Tt, r) pairs returned</span></div>
+    <div class="stat"><b>16</b><span>lmfdb baseline pairs unlocked</span></div>
   </div>
 </div></header>
-
 <main><div class="wrap">
 
 <h2 id="object">The object</h2>
@@ -180,72 +167,159 @@ and not a detail. See <a href="#obstruction">the obstruction</a>.</p>
 explicit degree-24 integer polynomials realizing as many of the 25,000 transitive groups
 <code>24T1</code>&ndash;<code>24T25000</code>, and their signatures, as possible. The frozen
 LMFDB-derived baseline covers 286 labels and 622 of the 165,836 possible
-<code>(24Tt, r)</code> pairs, so most of the map is blank.</p>
+<code>(24Tt, r)</code> pairs. Credit is per <code>(24Tt, r)</code> pair, once per team, so the
+binding constraint is <b>distinct pairs</b> &mdash; not polynomials.</p>
 
-<p><b>Method.</b> <code>24 = 2&middot;12 = 3&middot;8 = 4&middot;6 = 2&middot;2&middot;6 =
+<h3>Construction A &mdash; composita</h3>
+<p><code>24 = 2&middot;12 = 3&middot;8 = 4&middot;6 = 2&middot;2&middot;6 =
 2&middot;3&middot;4</code>. A compositum of linearly-disjoint subfields is <b>imprimitive by
-construction</b> &mdash; the field contains a proper subfield &mdash; which is where most of the
-25,000 groups live and where random sparse search does not go. Random polynomials land in
-<code>S24</code> or <code>A24</code>, which the baseline certainly holds.</p>
+construction</b>, which is where most of the 25,000 groups live and where random sparse search
+does not go. Random polynomials land in <code>S24</code> or <code>A24</code>.</p>
+<pre><code>min poly of &alpha; + c&beta;   from Newton power sums:
+    s_k = &Sigma;_m C(k,m) p_m(f) p_(k&minus;m)(g)        deg f = a, deg g = b, ab = 24</code></pre>
 
-<pre><code>min poly of &alpha; + c&beta;  =  Res_y( f(y), g(x &minus; cy) )     deg f = a, deg g = b, ab = 24</code></pre>
+<h3>Construction B &mdash; quadratic towers over totally real fields</h3>
+<p>A tower is not a compositum, and it reaches signatures no compositum can. Let
+<code>K12</code> be <b>totally real</b> of degree 12 and let &alpha;&nbsp;&isin;&nbsp;<code>K12</code>
+be negative at exactly <code>j</code> of its twelve real places. In
+<code>K24 = K12(&radic;&alpha;)</code> the <code>12&minus;j</code> positive places each split into
+two real places and the <code>j</code> negative ones each give a complex conjugate pair:</p>
+<pre><code>signature (2(12&minus;j), j),   r = 24 &minus; 2j,   j = 0 &hellip; 12</code></pre>
+<p>Choosing &alpha; is exact rather than a search. If &theta; generates <code>K12</code> with real
+conjugates &theta;&#8321;&nbsp;&lt;&nbsp;&hellip;&nbsp;&lt;&nbsp;&theta;&#8321;&#8322;, then
+<code>m&theta; &minus; k</code> is negative precisely where
+&theta;&#7522;&nbsp;&lt;&nbsp;<code>k/m</code>, so placing <code>k/m</code> in the gap
+(&theta;&#7524;,&nbsp;&theta;&#7524;&#8330;&#8321;) gives exactly <code>j</code> negative places.
+The minimal polynomial is then <code>g_&alpha;(x&sup2;)</code> where
+<code>g_&alpha; = m&sup1;&sup2;&middot;g((x+k)/m)</code> &mdash; integer arithmetic, no resultants
+and no power sums.</p>
+<p><b>Irreducibility is free.</b> <code>K12</code> is totally real, so every square in it is
+non-negative at every real place; &alpha; is negative somewhere, hence not a square, hence
+<code>[K12(&radic;&alpha;):K12] = 2</code> and <code>g_&alpha;(x&sup2;)</code> is irreducible. No
+factorization is performed or needed.</p>
 
-<p><b>Deduplication.</b> Varying <code>c</code> generates the <em>same</em> field, so those are not
-distinct submissions. Candidates were fingerprinted by factorization pattern mod the first 25
-primes &mdash; a strong field invariant &mdash; and only the smallest <code>|poldisc|</code>
-generator per field was kept. 754 constructions collapsed to <b>587 distinct fields</b>. Triple
-composita (2&middot;2&middot;6, 2&middot;3&middot;4) carry nested block systems and reach groups
-the pair constructions cannot.</p>
+<div class="box">
+  <div class="label">Two parameters, two axes</div>
+  <p><b>Interval placement</b> of <code>k/m</code> sets the signature: <code>r = 24 &minus; 2j</code>.
+  Three values &mdash; <code>r = 22, 14, 10</code> &mdash; are unreachable by <em>any</em>
+  compositum, since <code>r = d mod 2</code> forces an even-degree constituent to have even
+  signature and each of those requires an odd one.</p>
+  <p><b>Square class of <code>N(&alpha;)</code></b> within that interval gives one exact bit of the
+  group. Since &prod;&sigma;(&alpha;) = <code>N(&alpha;)</code> is rational,
+  &radic;<code>N(&alpha;)</code> always lies in the Galois closure: when <code>N(&alpha;)</code> is
+  a rational square that element is rational and the all-flips element of
+  <code>C&#8322;&sup1;&sup2;</code> acts trivially, confining the twist module to the index-2
+  kernel of the sum map; when it is not, <code>&#8474;(&radic;N(&alpha;))</code> is a quadratic
+  subfield not inherited from <code>K12</code> and the module can reach the full
+  <code>2&sup1;&sup2;</code>.</p>
+  <p><b>The bit is readable off the submitted line.</b> <code>g_&alpha;</code> is monic of even
+  degree, so the constant term of the degree-24 polynomial is exactly
+  <code>a&#8320; = g_&alpha;(0) = N(&alpha;)</code>. One integer square-root test classifies a line
+  &mdash; no Frobenius profiling, no threshold, no calibration.</p>
+  <p class="fineprint">Necessary, not complete: it splits the twist module by one bit, not into all
+  its submodules. But that bit is exact where a sampled profile is statistical. Checked against the
+  twelve <code>r=16</code> classes below &mdash; six have square <code>a&#8320;</code>, six
+  non-square, and no class contains both.</p>
+</div>
 
-<p><b>The modulo ladder.</b> By Chebotarev, the factorization degree pattern of <code>f</code>
-mod&nbsp;<code>p</code> is the cycle type of a Frobenius element, so climbing primes reads the
-group's cycle types off without a computer algebra licence. Candidates with few, block-structured
-cycle types have small imprimitive groups; those throwing 22- and 23-cycles are
-<code>S24</code>/<code>A24</code>.</p>
-
+<h2 id="results">Verifier results</h2>
+<p>Everything in this section is returned by the official Magma pipeline, not asserted here.</p>
 <div class="tablewrap">
 <table>
-<thead><tr><th>Construction</th><th>cycle types</th><th>max cycle</th><th>log&#8321;&#8320;|poldisc|</th></tr></thead>
+<thead><tr><th>Submitted</th><th>Lines</th><th>Accepted</th><th>Labels</th><th>Pairs</th><th>Scoring</th></tr></thead>
 <tbody>
-<tr><td class="mono">x&#8308;+1 &times; x&#8310;+x&sup3;+1</td><td>3</td><td>6</td><td>119</td></tr>
-<tr><td class="mono">x&#8308;+1 &times; x&#8310;&minus;x&sup3;&minus;1</td><td>3</td><td>6</td><td>122</td></tr>
-<tr><td class="mono">x&sup3;&minus;x&minus;1 &times; x&#8312;+1</td><td>5</td><td>12</td><td>124</td></tr>
-<tr><td class="mono">x&#8308;&minus;x&sup2;&minus;1 &times; x&#8310;+x&sup3;+1</td><td>5</td><td>12</td><td>124</td></tr>
-<tr><td class="mono">&hellip; 66 more profiled</td><td>6&ndash;26</td><td>12&ndash;22</td><td>99&ndash;328</td></tr>
+<tr><td class="num">15 Aug 17:37</td><td class="num">588</td><td class="num">588</td>
+    <td class="num">31</td><td class="num">39</td>
+    <td><span class="tag t-ok">SCORED</span> 34 pairs scoreable</td></tr>
+<tr><td class="num">16 Aug 06:03</td><td class="num">450</td><td class="num">450</td>
+    <td class="num">121</td><td class="num">213</td>
+    <td><span class="tag t-open">PENDING</span></td></tr>
+<tr><td class="num">16 Aug 06:44</td><td class="num">86</td><td class="num">86</td>
+    <td class="num">10</td><td class="num">10</td>
+    <td><span class="tag t-open">PENDING</span></td></tr>
+<tr><td class="num">16 Aug, towers</td><td class="num">50&ndash;238</td><td>&mdash;</td>
+    <td>&mdash;</td><td>&mdash;</td>
+    <td><span class="tag t-open">NOT YET RETURNED</span></td></tr>
 </tbody>
 </table>
 </div>
+<p>Of submission 1's 588 accepted rows, 201 fell on pairs already in the frozen baseline. 112 of
+those were no-scored as <code>lmfdb_baseline_not_improved</code>. The other <b>16 baseline pairs
+were unlocked</b> on a strictly smaller exact <code>nfdisc</code>, with margins up to
+10&#185;&#8308; &mdash; the composita are built from small-conductor pieces, so their
+discriminants are structurally small.</p>
+
+<div class="box correction">
+  <div class="label">Correction &mdash; 195 spectra was not a lower bound</div>
+  <p>This page previously reported that the mod-<code>p</code> ladder found
+  <b>195 distinct cycle-type spectra</b> across the 587 fields of submission 1, and that since
+  different spectra force different Galois groups, 195 was a lower bound on distinct groups. The
+  verifier returned <b>31 distinct labels and 39 distinct
+  <code>(24Tt, r)</code> pairs</b> from those same polynomials. The estimate overcounted by
+  6.3&times;.</p>
+  <p>The premise is true of <em>limiting</em> spectra and false of <em>sampled</em> ones. A
+  spectrum read at 25 primes is a small multinomial sample; two fields with the same group
+  routinely show different observed spectra, so counting observed spectra counts sampling noise as
+  structure. For two samples of size <code>n</code> from one distribution the expected
+  <code>L1</code> distance is <code>~1.1284&middot;S/&radic;n</code> with
+  <code>S = &Sigma;&radic;(p&#7522;(1&minus;p&#7522;))</code>, so any fixed cutoff splits
+  high-entropy groups apart while merging low-entropy ones. Replacing the fixed cut with a
+  threshold scaling as <code>S/&radic;n</code>, at 1000 primes, and calibrating the constant
+  against the returned Magma labels recovers <b>38 of the 39 true pairs</b> with every cluster
+  pure. The old figure was an estimate presented in the grammar of a measurement.</p>
+</div>
+
+<h3>What the tower reaches</h3>
+<p>Locally verified &mdash; monic degree 24, unit content, nonzero constant term, irreducible over
+<code>&#8474;</code>, real-root count by Sturm &mdash; and submitted; labels not yet returned.</p>
+<div class="tablewrap">
+<table>
+<thead><tr><th>j</th><th>r</th><th>classes</th><th>log&#8321;&#8320;|poldisc|</th><th>reachable by compositum?</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td class="num">22</td><td class="num">5</td><td class="num">71&ndash;279</td><td>no</td></tr>
+<tr><td class="num">2</td><td class="num">20</td><td class="num">7</td><td class="num">84&ndash;&hellip;</td><td>yes (2&middot;10)</td></tr>
+<tr><td class="num">3</td><td class="num">18</td><td class="num">5</td><td class="num">70&ndash;95</td><td>yes (3&middot;6)</td></tr>
+<tr><td class="num">4</td><td class="num">16</td><td class="num">12</td><td class="num">36&ndash;206</td><td>yes (2&middot;8, 4&middot;4)</td></tr>
+<tr><td class="num">5</td><td class="num">14</td><td class="num">5</td><td class="num">72&ndash;256</td><td>no</td></tr>
+<tr><td class="num">7</td><td class="num">10</td><td class="num">5</td><td class="num">78&ndash;256</td><td>no</td></tr>
+</tbody>
+</table>
+</div>
+<p>At <code>r=20</code>, <code>r=18</code> and <code>r=16</code> the tower classes were checked
+against the compositum classes already submitted at the same signature and <b>none collided</b>
+&mdash; consistent with the different block structure (<code>C&#8322; wr G&#8321;&#8322;</code>,
+twelve blocks of size 2, against a product action).</p>
+<p>The smallest lines sit at <code>log&#8321;&#8320;|poldisc| = 36</code>, a root discriminant of
+about 31.6 at degree 24. Those all have <code>|a&#8320;| = 1</code>: &alpha; is a unit, so the
+relative different divides <code>(2)</code>. A unit is a square class representative, which
+couples the two axes &mdash; <b>the small-discriminant lines are exactly the confined-module
+ones</b>, and reaching the full <code>2&sup1;&sup2;</code> means giving up the unit and with it the
+small discriminant.</p>
 
 <div class="box">
   <div class="label">What is not claimed</div>
   <p>No <code>24Tt</code> label was computed locally: this entry was prepared without Magma, and
-  the official verifier assigns the labels. The submission was <b>not</b> filtered against the
-  frozen LMFDB baseline, so an unknown fraction of these fields is already covered &mdash; the
-  cyclotomic ones almost certainly are (<code>x&#8308;+1 &times; x&#8310;+x&sup3;+1</code> is
-  &#8474;(&zeta;&#8327;&#8322;), degree &phi;(72)=24, abelian). Expected yield is unknown, not
-  zero. <b>Nothing here should be described as a discovery until the verifier says so.</b></p>
-</div>
-
-<div class="box">
-  <div class="label">Expected yield, stated honestly</div>
-  <p>588 polynomials is not 588 results. Each team is credited <b>once</b> per
-  <code>(24Tt, r)</code> pair however many polynomials realize it, so the binding constraint is
-  group diversity, not throughput. Across the 587 fields the mod-p ladder finds
-  <b>195 distinct cycle-type spectra</b> &mdash; different spectra force different Galois groups,
-  so that is a lower bound on distinct groups. 113 are singletons. The largest cluster has 49
-  polynomials sharing one spectrum: the construction saturating.</p>
-  <p>That is why the 200,000-polynomials-per-day ceiling is not the lever. More pairs come from
-  new structural families, not more lines.</p>
+  the official verifier assigns the labels. Predicted labels are inferred from Frobenius density
+  profiles, appear in no column of any submission, and affect nothing. Clustering counts are
+  <b>exhaustive for these constructions</b>, not proofs that no further classes exist at a
+  signature. The tower class counts above rest on profiles computed over 400 primes at
+  <code>r&nbsp;=&nbsp;22,18,14,10</code> and 250 at <code>r&nbsp;=&nbsp;20,16</code>; a wider
+  &alpha; sweep across both square classes would likely raise them.</p>
+  <p><b>Nothing here is described as a discovery until the verifier says so</b>, and for the tower
+  submissions it has not yet said so.</p>
 </div>
 
 <h2 id="reproducing">Reproducing</h2>
-<pre><code>python3 gen_igp24_v2.py     # 754 constructions -> 587 distinct fields
+<pre><code>python3 gen_igp24_v2.py      # composita:  754 constructions -> 587 distinct fields
+python3 tower.py build  j    # towers:     K12(sqrt a), j negative places, r = 24-2j
+python3 tower.py profile j
 lake exe cache get &amp;&amp; lake build
 #print axioms Theorem_Galois</code></pre>
 <p>A result counts as proved here only when <code>#print axioms</code> returns
 <code>[propext, Classical.choice, Quot.sound]</code> and nothing else. If <code>sorryAx</code>
 appears, the theorem is open regardless of what any README, badge, description or chapter says
-about it.</p>
+about it. The IGP24 analogue is the verifier's returned <code>status</code> and
+<code>scoringStatus</code> columns; a locally verified polynomial is a candidate, not a result.</p>
 
 <h2 id="sources">Sources</h2>
 <p class="legend">
@@ -255,7 +329,6 @@ about it.</p>
   <span class="tier">pers</span> personal communication, unverified &middot;
   <span class="tier bad">retracted</span> recorded error
 </p>
-
 <p><b>Mathematics.</b></p>
 <ul class="refs">
   <li><span class="tier">search</span> A. Movahhedi and A. Salinier,
@@ -270,12 +343,16 @@ about it.</p>
   <li><span class="tier">pub</span> C. Jordan,
     <em>Th&eacute;or&egrave;mes sur les groupes primitifs</em>,
     J. Math. Pures Appl. (2) <b>16</b> (1871) 383&ndash;408.</li>
+  <li><span class="tier">pub</span> LMFDB Collaboration,
+    <em>Galois groups of degree 24</em>,
+    <a href="https://www.lmfdb.org/GaloisGroup/?n=24">lmfdb.org/GaloisGroup/?n=24</a>.
+    Frozen baseline CSV downloaded from the competition site and used for all baseline
+    comparisons on this page.</li>
   <li><span class="tier bad">retracted</span> &ldquo;On the Galois group of trinomials&rdquo;,
     J. Algebra <b>182</b> (1996) 322&ndash;333, <code>10.1006/jabr.1996.0172</code> &mdash;
     <b>no such article</b>. Title, journal, volume, pages and DOI all incorrect. Proposed as a
     replacement for a <code>[CITE NEEDED]</code> marker, checked, and rejected before commit.</li>
 </ul>
-
 <p><b>Standards of practice.</b></p>
 <ul class="refs">
   <li><span class="tier">given</span> H. Cohn, <em>Advice for amateur mathematicians on writing
@@ -292,7 +369,6 @@ about it.</p>
   <li><span class="tier">pers</span> Recommendation of the above as a benchmark for
     &ldquo;flawless&rdquo;. Personal communication; date and channel not recorded.</li>
 </ul>
-
 <p class="fineprint">The three <span class="tier">search</span> entries rest on bibliographic
 search results, not on a review database. MathSciNet or zbMATH Open resolves each in under a
 minute and promotes them to <span class="tier">pub</span>; until that is run, they are recorded at
@@ -321,6 +397,15 @@ results assume irreducibility, so they do not apply to <code>X^(n+1) &minus; 2X^
 without a reduction argument that has not been written. A plausible-looking citation and a
 plausible-looking applicability are the same failure mode as a green badge over a
 <code>sorry</code>.</p>
+<p><b>A fourth correction, of a different kind.</b> The 195-spectra figure above was not a bad
+citation and not a bad proof &mdash; it was a statistic computed correctly and interpreted as
+something it was not. The count was right; calling it a lower bound on distinct groups was wrong,
+because the invariant it counted was sampled rather than exact. It survived until the verifier
+returned 31 labels against it. A number carrying an implicit modelling assumption is the same
+species of claim as a badge: it looks like evidence and is not, and the only cure is an
+independent oracle. That is why the <a href="#results">results</a> section reports only what the
+Magma pipeline returned, and why the tower rows in it are marked
+<span class="tag t-open">NOT YET RETURNED</span> rather than counted.</p>
 
 <h2 id="contact">Contact</h2>
 <div class="cards">
@@ -340,9 +425,7 @@ plausible-looking applicability are the same failure mode as a green badge over 
 </div>
 <p class="fineprint">Built in-page: no third-party script, no cookies, nothing that fails
 invisibly if a reader blocks trackers.</p>
-
 </div></main>
-
 <footer><div class="wrap">
   Principia Orthogona &middot; galois &middot; G6 LLC &middot; Pablo Nogueira Grossi &middot; Newark NJ &middot; 2026<br>
   ORCID <a href="https://orcid.org/0009-0000-6496-2186">0009-0000-6496-2186</a> &middot;
@@ -351,5 +434,4 @@ invisibly if a reader blocks trackers.</p>
   Lean source MIT &middot; prose CC BY-NC-ND 4.0.
   Independent research; not peer-reviewed. Open steps are marked <span class="tag t-open">OPEN</span>.
 </div></footer>
-
 </body></html>
