@@ -304,16 +304,48 @@ verifier returned.</p>
   <code>(24Tt, r)</code>, five groups still bought twenty pairs &mdash; but the group axis
   contributed nothing, and the per-signature clustering could not have detected this, because it
   never compared across signatures.</p>
-  <p>All five labels have <b>non-square <code>a&#8320;</code></b>. Every one of the 238 lines sat in
-  a single rational square class, so the one lever that does move the group was never pulled in the
-  submission that most needed it. The adjacent label numbers &mdash; 14744/14745 and 16693/16694
-  &mdash; are what an index-2 relation looks like in the <code>24Tt</code> ordering, which is where
-  the other square class would have landed.</p>
-  <p><b>A six-line submission was wasted on this.</b> It added &alpha; from the opposite square
-  class as companions to the <code>r=16</code> tower lines; the verifier returned 3 pairs, all
-  three already present in that earlier submission. The earlier file already spanned both square
-  classes &mdash; six classes with square <code>a&#8320;</code> and six without, a fact measured
-  before the companion file was built and not consulted while building it.</p>
+  <p>All five labels have <b>non-square <code>a&#8320;</code></b> &mdash; and that turns out to be
+  forced, not accidental. See the parity coupling below.</p>
+  <p><b>A six-line submission was wasted here.</b> It added &alpha; from the opposite square class
+  as companions to the <code>r=16</code> tower lines; the verifier returned 3 pairs, all three
+  already present in that earlier submission. The earlier file already spanned both square classes
+  &mdash; six classes with square <code>a&#8320;</code> and six without, a fact measured before the
+  companion file was built and not consulted while building it.</p>
+</div>
+
+<div class="box">
+  <div class="label">Signature and module class are coupled by parity</div>
+  <p>Write <code>N(&alpha;) = &prod;&sigma;(&alpha;)</code> over the twelve real embeddings of the
+  totally real <code>K12</code>. Exactly <code>j</code> of the factors are negative, so</p>
+  <pre><code>sign N(&alpha;) = (&minus;1)^j</code></pre>
+  <p>For <b>odd <code>j</code></b> this is negative, and a negative rational is never a square.
+  Since <code>&radic;N(&alpha;) = &prod;&radic;&sigma;(&alpha;)</code> always lies in the Galois
+  closure, the square class of <code>N(&alpha;)</code> decides whether that element is rational
+  &mdash; confining the twist module to the index-2 kernel of the sum map &mdash; or generates a
+  quadratic subfield not inherited from <code>K12</code>, letting the module reach the full
+  <code>2&sup1;&sup2;</code>. Therefore:</p>
+  <div class="tablewrap">
+  <table>
+  <thead><tr><th>signature</th><th>j</th><th>r</th><th>N(&alpha;)</th><th>module class</th></tr></thead>
+  <tbody>
+  <tr><td>r &equiv; 0 (mod 4)</td><td>even</td><td class="num">24,20,16,12,8,4,0</td>
+      <td>positive</td><td>both classes available &mdash; a free bit</td></tr>
+  <tr><td>r &equiv; 2 (mod 4)</td><td>odd</td><td class="num">22,18,14,10,6,2</td>
+      <td><b>negative</b></td><td><b>non-confined only, always</b></td></tr>
+  </tbody>
+  </table>
+  </div>
+  <p>The argument uses nothing about the shape of &alpha; &mdash; only how many real places it is
+  negative at &mdash; so it holds for every &alpha; in <code>K12</code>, not just the linear family
+  <code>m&theta; &minus; k</code> used here. Checked on 2,443
+  <code>(K12, m, k)</code> triples: 2,443 confirm, 0 violate.</p>
+  <p>This explains the collapse above exactly. The 238-line submission targeted
+  <code>j = 1, 3, 5, 7</code>, all odd, so every line was forced into one module class and the four
+  signatures could only ever return the same groups. It is also the practical rule: <b>at
+  r &equiv; 2 (mod 4) the tower has no group axis at all</b>, and more classes there require a
+  different block structure, not a wider search. The square classes observed in the returned labels
+  agree &mdash; <code>24T7819, 7829, 7831, 7834, 10257&ndash;10259, 12727, 12729, 14761</code>
+  occur only at <code>r = 16, 20</code>, never at <code>r = 22, 18, 14, 10</code>.</p>
 </div>
 <p>None of the 20 tower pairs appears in the competition's published uncovered-signature list, so
 the construction landed entirely on ground already held by someone. The list has 2,722 open cells
